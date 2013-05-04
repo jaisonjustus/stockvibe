@@ -30,6 +30,7 @@ define(
        * @access private
        */
       _dashboard : function() {
+        this.views.dashboard.render();
         console.log('dashboard page');
       }
 

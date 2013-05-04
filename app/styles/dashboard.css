@@ -1,0 +1,327 @@
+/**
+ * Dashboard Stylesheet
+ * @cssversion  3
+ * @comp All Mordern Browsers
+ */
+
+
+/* Header Styling. */
+header  {
+  width: 96%;
+  padding:0 2% 0 2%;
+  height: 80px;
+  background-color: #d35400;
+  overflow: hidden;
+}
+
+header aside  {
+  width: auto;
+  min-width: 300px;
+  height: 80px;
+  float: left;
+}
+
+aside img {
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  margin:10px 0px 0px 0px;
+  float: left;
+}
+
+aside hgroup  {
+  width:auto;
+  height: 80px;
+  min-width: 150px;
+  float: left;
+}
+
+aside hgroup h2  {
+  width: 150px;
+  font:16px "Source Sans Pro";
+  font-weight: 200;
+  color:white;
+  /*display: inline;*/
+  text-align: left;
+  float: right;
+  line-height: 10px;
+  margin:26px 0px 0px 10px;
+}
+
+aside hgroup h1  {
+  width: 150px;
+  font:20px "Source Sans Pro";
+  font-weight: 400;
+  color:white;
+  /*display: inline;*/
+  clear: right;
+  float: right;
+  margin: 0px 0px 0px 10px;
+}
+
+/* Add Snapshot section styling. */
+#add-snapshot-wrapper {
+  width: 94%;
+  height: 39px;
+  padding: 5px 3% 5px 3%;
+  background-color: #bdc3c7;
+}
+
+#add-snapshot-wrapper i {
+  font:35px "WebSymbolsRegular";
+  color:#7f8c8d;
+}
+
+#add-snapshot-wrapper p {
+  font:20px "Source Sans Pro";
+  font-weight: 100; 
+  color:#7f8c8d;
+  margin:7px 10px 0px 0px;
+}
+
+#add-snapshot-wrapper input[type=text]  {
+  width: 200px;
+  height: 30px;
+  margin:3px 10px 0px 0px;
+  font:22px "Source Sans Pro";
+  font-weight: 100;
+  color:white;
+  background-color:#7f8c8d;
+  border: 1px solid #7f8c8d;
+}
+
+/* Stock Snapshot content wrapper styling. */
+#stock-snapshots-wrapper  {
+  width: 96%;
+  height: auto;
+  padding: 2%;
+  margin: 20px 0px 20px 0px;
+  /*background-color: green;*/
+  text-align: center;
+}
+
+/* Stock snapshot styling. */
+.snapshot {
+  width: 380px;
+  height: auto;
+  overflow: hidden;
+  background-color: white;
+  padding-bottom: 2%;
+  /*display: inline-block;*/
+  text-align: none;
+  /*border-bottom: 5px #ecf0f1 solid;*/
+  margin: 5px;
+  box-shadow: 0px 0px 5px 1px #ecf0f1;
+  -webkit-box-shadow: 0 8px 6px -6px #171817;
+  -moz-box-shadow: 0 8px 6px -6px #171817;
+  box-shadow: 0 4px 10px -4px #7f8c8d;
+}
+
+.note  {
+  background-color: #d35400 !important;
+  border: 0 !important;
+  /*box-shadow: none !important;*/
+  padding-bottom: 0 !important;
+}
+
+.note p {
+  width: 94%;
+  padding: 3%;
+  font:15px "Source Sans Pro";
+  text-align: left;
+  font-weight: 100;
+  float: none !important;
+  color:white !important;
+  margin: 10px 0px 10px 10px !important; 
+}
+
+.note ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.note ol li {
+  width:380px;
+  height: auto;
+  overflow: hidden;
+  background-color: white;
+
+
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  border-bottom:1px solid #ecf0f1;
+  padding: 5px 0px 5px 0px;
+}
+
+.note ol li .company{
+  width:46%;
+  height: auto;
+  padding: 0px 2% 0px 2%;
+  float: left;
+  font:18px "Source Sans Pro";
+  font-weight: 100;
+  color:#7f8c8d;
+}
+
+.note ol li .stock{
+  width:46%;
+  height: auto;
+  padding: 0px 2% 0px 2%;
+  float: right;
+  font:18px "Source Sans Pro";
+  font-weight: 100;
+  color:#7f8c8d;
+  vertical-align: middle;
+}
+
+.snapshot h1.title  {
+  width: 94%;
+  padding: 3%;
+  font:25px "Source Sans Pro";
+  text-align: left;
+  font-weight: 100;
+  color:white;
+  /*padding: 10px 0px 10px 10px;*/
+  /*margin: 10px 0px 10px 10px;*/
+  background-color: #d35400;
+}
+
+.snapshot .stock-chart {
+  width: 100%;
+  height: 330px;
+  clear:left;
+}
+
+.snapshot .stock-alert  {
+  width: 94%;
+  height: auto;
+  padding: 2% 3% 2% 3%;
+  background-color: #ecf0f1;
+  overflow: hidden;
+}
+
+.snapshot .stock-alert i {
+  font:17px "WebSymbolsRegular";
+  color:#7f8c8d;
+  margin:2px 0px 0px 10px;
+  float: left;
+}
+
+.snapshot .stock-alert p {
+  float: left;
+  margin:2px 0px 0px 10px;
+  font:17px "Source Sans Pro";
+  font-weight: 100;
+  color:#7f8c8d;
+}
+
+.snapshot .stock-alert input[type=text] {
+  width: 100px;
+  float: left;
+  margin:0px 0px 0px 10px;
+  font:17px "Source Sans Pro";
+  font-weight: 100;
+  color:#7f8c8d;
+  border: 1px solid #bdc3c7;
+}
+
+.snapshot .stock-display  {
+  width: 98%;
+  min-height: 60px;
+  height: auto;
+  margin: 5px 0;
+  padding: 0px 1% 0px 1%;
+  /*background-color: orange;*/
+}
+
+.stock-display hgroup {
+  width:95px;
+  height: 60px;
+  margin: 0px 0px 2px 0px;
+  float: right;
+  padding-right: 10px;
+  border-right:1px #ecf0f1 solid;
+  border-bottom:1px #ecf0f1 solid;
+}
+
+.stock-display hgroup h2  {
+  /*width: 150px;*/
+  font:16px "Source Sans Pro";
+  font-weight: 200;
+  color:#7f8c8d;
+  /*display: inline;*/
+  text-align: right;
+  float: right;
+  line-height: 10px;
+  margin:26px 0px 0px 10px;
+}
+
+.stock-display hgroup h1  {
+  /*width: 150px;*/
+  font:20px "Source Sans Pro";
+  font-weight: 700;
+  color:#7f8c8d;
+  /*display: inline;*/
+  clear: right;
+  float: right;
+  margin: 0px 0px 0px 10px;
+}
+
+.up {
+   width: 0; 
+   height: 0; 
+   border-bottom: 30px solid #2ecc71; 
+   border-left: 15px solid transparent; 
+   border-right: 15px solid transparent; 
+   float: right;
+   margin: 3px 0;
+}
+
+.down { 
+   width: 0; 
+   height: 0;
+   border-top: 30px solid #e74c3c;
+   border-left: 15px solid transparent; 
+   border-right: 15px solid transparent;
+   float: right;
+   margin: 3px 0;
+}
+
+.up-small {
+   width: 0; 
+   height: 0; 
+   border-bottom: 20px solid #2ecc71; 
+   border-left: 10px solid transparent; 
+   border-right: 10px solid transparent; 
+   float: right;
+   margin: 3px 0;
+}
+
+.down-small { 
+   width: 0; 
+   height: 0;
+   border-top: 20px solid #e74c3c;
+   border-left: 10px solid transparent; 
+   border-right: 10px solid transparent;
+   float: right;
+   margin: 3px 0;
+}
+
+.change {
+  border: 0 !important;
+  border-bottom:1px #ecf0f1 solid !important;
+}
+
+.high {
+  border: 0 !important;
+}
+
+.open {
+  border-bottom:0px #ecf0f1 solid !important; 
+}
+
+.decrease {
+  color : #c0392b !important;
+}

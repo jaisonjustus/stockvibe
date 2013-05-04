@@ -22,14 +22,19 @@ require.config({
     jquery : '../components/jquery/jquery',
     backbone : '../components/backbone-amd/backbone',
     underscore : '../components/underscore-amd/underscore',
+    tpl : '../components/requirejs-tpl/tpl',
 
     /* Custom Modules. */
     yql_finance_model : 'modules/yql_finance_model',
+    utility : 'modules/utility',
 
     /* Backbone Models. */
     stock : 'models/stock',
+    company : 'models/company',
+    d3dm : 'models/D3DataModel',
 
     /* Backbone Collections. */
+    d3dc : 'collections/D3DataCollection',
 
     /* Backbone Views. */
     dashboard : 'views/dashboard'  

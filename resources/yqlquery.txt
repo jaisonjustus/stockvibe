@@ -1,0 +1,1 @@
+select finance.symbol,finance.company,finance.high,finance.low,finance.last,finance.change,finance.perc_change,finance.y_close from google.igoogle.stock where stock='GOOG'

@@ -90,6 +90,7 @@ define(
           response = model._responseCleanser(response.query.results);
           model.set(response);
           model.trigger('reset');
+          model.trigger('yqlfetchsuccess');
           if(success) { success(model, response, options) }
         };
 
@@ -117,6 +118,13 @@ define(
           }
 
           return response;
+        }else if(this.openTable.toLowerCase() === 'yahoo.finance.oquote')  {
+          if(response && response.hasOwnProperty('option')) {
+            return response['option'];  
+          }else {
+            return {};
+          }
+          
         }
       }
     });
