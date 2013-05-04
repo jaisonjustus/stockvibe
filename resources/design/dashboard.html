@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+    <link href='fonts/symbols/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="styles/layout.css" type="text/css"/>
+    <link rel="stylesheet" href="styles/dashboard.css" type="text/css"/>
+  </head>
+  <body>
+    <div id="app-wrapper">
+      <header>
+        <aside>
+          <img src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=60" alt="avatar"/>
+          <hgroup>
+            <h2>Welcome,</h2>
+            <h1>Jaison Justus</h1>
+          </hgroup>
+        </aside>
+      </header>
+
+      <section id="stock-snapshots-wrapper">
+
+        <section class="snapshot note">
+          <h1 class="title">NYSE Overview</h1>
+          <p>
+            Even after a brief midweek pullback, the bulls came back out to recoup the losses. The majority of earnings are still beating estimates, however the revenues for most companies tell a different story.
+          </p>
+          <section id="overview-wrapper">
+            <ol>
+              <li>
+                <div class="company">
+                  GOOG
+                </div>
+                <div class="stock">
+                  <div class="up-small"></div>
+                  +9.35
+                </div>
+              </li>
+
+               <li>
+                <div class="company">
+                  MSFT
+                </div>
+                <div class="stock">
+                  <div class="down-small"></div>
+                  -0.35
+                </div>
+              </li>
+
+               <li>
+                <div class="company">
+                  INFY
+                </div>
+                <div class="stock">
+                  <div class="up-small"></div>
+                  +9.35
+                </div>
+              </li>
+            </ol>
+          </section>
+        </section>
+
+        <section class="snapshot">
+          <h1 class="title">Yahoo! Inc</h1>
+          
+          <div class="stock-chart">
+          </div>
+
+          <section class="stock-alert">
+            <i>W</i>
+            <p> Stock alert </p>
+            <input type="text" id="alert" class="alert" name="alert" placeholde="enter your slert here!">
+          </section>
+
+          <section class="stock-display">
+            <hgroup class="change">
+              <div class="down"></div>
+              <h1 class="decrease">-7.03</h1>
+            </hgroup>
+
+            <hgroup class="current">
+              <h2>current</h2>
+              <h1>495.87</h1>
+            </hgroup>
+
+            <hgroup class="low">
+              <h2>low</h2>
+              <h1>492.21</h1>
+            </hgroup>
+
+            <hgroup class="high">
+              <h2>high</h2>
+              <h1>496.78</h1>
+            </hgroup>
+
+            <hgroup class="open">
+              <h2>open</h2>
+              <h1>480</h1>
+            </hgroup>
+
+          </section>
+        </section>
+
+        <section class="snapshot">
+          <h1 class="title">Yahoo! Inc</h1>
+          
+          <div class="stock-chart">
+          </div>
+
+          <section class="stock-alert">
+            <i>W</i>
+            <p> Stock alert </p>
+            <input type="text" id="alert" class="alert" name="alert" placeholde="enter your slert here!">
+          </section>
+
+          <section class="stock-display">
+            <hgroup class="change">
+              <div class="down"></div>
+              <h1 class="decrease">-7.03</h1>
+            </hgroup>
+
+            <hgroup class="current">
+              <h2>current</h2>
+              <h1>495.87</h1>
+            </hgroup>
+
+            <hgroup class="low">
+              <h2>low</h2>
+              <h1>492.21</h1>
+            </hgroup>
+
+            <hgroup class="high">
+              <h2>high</h2>
+              <h1>496.78</h1>
+            </hgroup>
+
+            <hgroup class="open">
+              <h2>open</h2>
+              <h1>480</h1>
+            </hgroup>
+
+          </section>
+        </section>
+
+      </section>
+    </div>
+    <script type="text/javascript" src="http://packery.metafizzy.co/packery.pkgd.min.js"></script>
+    <script type="text/javascript" src="http://draggabilly.desandro.com/draggabilly.pkgd.min.js"></script>
+    <script type="text/javascript">
+      var container = document.querySelector('#stock-snapshots-wrapper');
+var pckry = new Packery( container, {
+  // options
+  itemSelector: '.snapshot',
+  gutter: 0,
+  columnWidth: 10,
+  rowHeight: 10
+});
+    </script>
+  </body>
+</html>
