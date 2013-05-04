@@ -10,17 +10,18 @@ define(
 
       /* Default attributes. */
       defaults : {
-        "id" : "sym",
-        "price": "0",
-        "change": "0",
-        "prevClose": "0",
-        "open": "0",
-        "bid": "0",
-        "ask": null,
-        "strike": "0",
-        "expire": "0",
-        "volume": "0",
-        "openInterest": null
+        'id' : 'sym',
+        'sym' : 'sym',
+        'price': '0',
+        'change': '0',
+        'prevClose': '0',
+        'open': '0',
+        'bid': '0',
+        'ask': null,
+        'strike': '0',
+        'expire': '0',
+        'volume': '0',
+        'openInterest': null
       },
 
       openTable : 'yahoo.finance.oquote',

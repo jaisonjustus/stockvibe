@@ -322,6 +322,10 @@ aside hgroup h1  {
   border-bottom:0px #ecf0f1 solid !important; 
 }
 
+.increase {
+  color : #2ecc71 !important;
+}
+
 .decrease {
-  color : #c0392b !important;
+  color : #e74c3c !important;
 }

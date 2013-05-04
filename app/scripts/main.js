@@ -37,7 +37,9 @@ require.config({
     d3dc : 'collections/D3DataCollection',
 
     /* Backbone Views. */
-    dashboard : 'views/dashboard'  
+    dashboard : 'views/dashboard',
+    snapshot : 'views/snapshot',
+    
   }
 });
 

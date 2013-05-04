@@ -90,7 +90,7 @@ define(
           response = model._responseCleanser(response.query.results);
           model.set(response);
           model.trigger('reset');
-          model.trigger('yqlfetchsuccess');
+          model.trigger('yqlFetchSuccess');
           if(success) { success(model, response, options) }
         };
 
@@ -117,10 +117,17 @@ define(
             response[attr] = response[attr]['data'];
           }
 
+          /* HACK >>> STARTS */
+          response.change = (new Date().getSeconds() % 2 === 0) ? "+10.1" : "-32.4" ;
+          response.high = parseFloat(response.high) + new Date().getSeconds();
+          /* HACK >>> ENDS */
+
           return response;
         }else if(this.openTable.toLowerCase() === 'yahoo.finance.oquote')  {
           if(response && response.hasOwnProperty('option')) {
-            return response['option'];  
+            var temp = response['option'];
+            temp['id'] = temp['sym'];
+            return temp;  
           }else {
             return {};
           }
