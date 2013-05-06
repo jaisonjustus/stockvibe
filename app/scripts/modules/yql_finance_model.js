@@ -19,10 +19,7 @@ define(
       /* Polling rate. */
       deafultPollingRate : 10000,
 
-      /* var for keep YQL query. */
-      YQL : null,
-
-      /*  */
+      /* Request Url */
       url : null,
 
       /* yahoo api url to execute query. */
@@ -40,6 +37,11 @@ define(
       openTable : 'yahoo',
 
       initialize : function() {
+
+        /* var to keep yahoo query. */
+        this.YQL = null;
+
+        /* Long polling open data tables. */
         setInterval(
           (function(self)  {
             return function() {

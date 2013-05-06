@@ -1,7 +1,12 @@
+/**
+ * Application dashboard view controller. 
+ * @module Dashboard
+ */
 define(
-  ['jquery', 'backbone', 'stock', 'utility', 'd3dc', 'company', 'snapshot',
-  'tpl!../templates/dashboard-tpl.html'],
-  function($, _, Stock, Utility, D3DC, Company, Snapshot, DashboardTpl)  {
+  ['backbone', 'stock', 'company', 'snapshot',
+   'overview', 'data_fetcher', 'tpl!../templates/dashboard-tpl.html'],
+  function(Backbone, Stock, Company, Snapshot, Overview, 
+    DataFetcher, DashboardTpl)  {
 
     return Backbone.View.extend({
 
@@ -11,15 +16,23 @@ define(
 
       template : DashboardTpl,
 
-      model : new Stock,
-
+      /* DOM Selectors. */
       selectors : {},
 
+      /* list of companies in the dashboard. */
       companies : [],
 
+      /* used to save company instance while adding. */
       company : {},
 
+      /* Object to keep track of other views other than snapshots under
+         this view. */
+      extraViews : {},
+
+      /* Object to keep track of snapshots created under this view. */
       snapshots : {},
+
+      DataFetcherPorts : {},
 
       events : {
         'click #add-code' : '_onAddCode'
@@ -27,18 +40,23 @@ define(
 
       initialize : function() {
 
-        // this.model.set({ id : 'MSFT' })
+        // this.updateModel = function(id, response, context)  {
+        //   context.snapshots[id].model.set(response);
+        //   context.snapshots[id]._updateView();
+        // }
 
-        // this.model.on('reset', function() {
-        //  console.log(Utility.YQLtoD3DCMapper(this.model));
-        // }, this);
+        // this.text = function()  {
+        //   console.log(this);
+        // }
+
       },
 
       render : function() {
-        // this.on('addSnapshot', this._addSnapshot);
-
         this.$el.html(this.template());
         this._attachSelectors();
+
+        this.extraViews.overview = new Overview();
+        this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
       },
 
       /**
@@ -50,6 +68,7 @@ define(
       _attachSelectors : function() {
         this.selectors.codeTxtBox = this.$el.find('#code');
         this.selectors.statusLabel = this.$el.find('#add-code-status');
+
         this.selectors.snapshotWrapper = this.$el.find('#stock-snapshots-wrapper');
       },
 
@@ -67,7 +86,7 @@ define(
 
           this.company.set({ id : code });
           this.company.fetch();
-          this.company.on('yqlFetchSuccess', this._addCompany, this)  
+          this.company.on('yqlFetchSuccess', this._addCompany, this);
         }
       },
 
@@ -75,22 +94,42 @@ define(
        * Method to search company if valid add stock snapshot of the stock.
        * @method _addCompany
        * @access private
+       * @param object company
        */
       _addCompany : function(company)  {
         var details = this.company.toJSON();
 
         if(details.price !== '0') {
           this.companies.push(company);
-          // this.trigger('addSnapshot', details.id);
           this._addSnapshot(details.id);
+          this.extraViews.overview.renderPartial(details.id);
         }else {
           this.selectors.statusLabel.html('Invalid company!!!');
         }
       },
 
+      /**
+       * Method to add a snapshot to the snapshot wrapper.
+       * @method _addSnapshot
+       * @access private
+       * @param string id
+       */
       _addSnapshot : function(id) {
         this.snapshots[id] = new Snapshot({ id : id });
+        this.snapshots[id].on('updateOverview', this._callOverview, this);
+        this.DataFetcherPorts[id] = new DataFetcher(id);
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
+        this.snapshots[id].renderChart();
+      },
+
+      /**
+       * Method to update overview tile when there is a change in the
+       * stock snapshot.
+       * @method _callOverview
+       * @access private
+       */
+      _callOverview : function(data)  {
+        this.extraViews.overview.updateOverview(data.id, data.change);
       }
 
     });

@@ -28,9 +28,11 @@ define(
 
       longPolling : false,
 
-      YQL : ['select *',  
+      initialize : function() {
+       this.YQL = ['select *',  
       'from yahoo.finance.oquote', 
-      'where symbol='].join(' ')
+      'where symbol='].join(' ');
+    }
     });
 
   }

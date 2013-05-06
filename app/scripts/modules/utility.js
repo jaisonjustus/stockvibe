@@ -38,10 +38,12 @@ define(
         return priv._getMappedObject(last, changeObject);
       },
 
-      calcuateTimeAtNYSE : function(offset) {
-        var dateObj = new Date(),
+      calcuateTimeAtNYSE : function(offset, date) {
+        var dateObj = null,
             newDate = null;
-      
+        
+        dateObj = (date) ? date : new Date();
+
         utc = dateObj.getTime() + (dateObj.getTimezoneOffset() * 60000);
         return new Date(utc + (3600000*offset));
       } 

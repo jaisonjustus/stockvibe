@@ -6,6 +6,8 @@ define(
 
       model : D3DM,
 
+      url : '',
+
       initialize : function() {},
 
       fetch : function()  {
@@ -13,6 +15,10 @@ define(
       },
 
       save : function() {
+        this.trigger('restricted');
+      },
+
+      sync : function() {
         this.trigger('restricted');
       }
 

@@ -23,10 +23,13 @@ require.config({
     backbone : '../components/backbone-amd/backbone',
     underscore : '../components/underscore-amd/underscore',
     tpl : '../components/requirejs-tpl/tpl',
+    d3 : 'http://d3js.org/d3.v3.min',
 
     /* Custom Modules. */
     yql_finance_model : 'modules/yql_finance_model',
     utility : 'modules/utility',
+    data_fetcher : 'modules/data_fetcher',
+    d3_helper : 'modules/d3_helper',
 
     /* Backbone Models. */
     stock : 'models/stock',
@@ -39,7 +42,8 @@ require.config({
     /* Backbone Views. */
     dashboard : 'views/dashboard',
     snapshot : 'views/snapshot',
-    
+    overview : 'views/overview',
+    overview_partial : 'views/overview-partial'
   }
 });
 

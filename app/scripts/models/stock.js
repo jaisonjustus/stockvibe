@@ -21,16 +21,25 @@ define(
         'y_close': '0'
       },
 
+      /* Specifying open data table. */
       openTable : 'google',
 
+      /* Enabling Long Polling. */
       longPolling : true,
 
-      YQL : ['select', 
-      ['finance.symbol','finance.company','finance.high','finance.low',
-      'finance.last','finance.change',
-      'finance.perc_change','finance.y_close'].join(','), 
-      'from google.igoogle.stock', 
-      'where stock='].join(' ')
+      initialize : function() {
+
+        /* Calling parent initialization method. */
+        YQLFinanceModel.prototype.initialize.call(this);
+
+        /* YQL query for the model to get the financial data. */
+        this.YQL = ['select', 
+        ['finance.symbol','finance.company','finance.high','finance.low',
+        'finance.last','finance.change',
+        'finance.perc_change','finance.y_close'].join(','), 
+        'from google.igoogle.stock', 
+        'where stock='].join(' ');
+      }
     });
 
   }
