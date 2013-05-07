@@ -120,8 +120,8 @@ define(
           }
 
           /* HACK >>> STARTS */
-          response.change = (new Date().getSeconds() % 2 === 0) ? "+10.1" : "-32.4" ;
-          response.high = parseFloat(response.high) + new Date().getSeconds();
+          // response.change = (new Date().getSeconds() % 2 === 0) ? "+10.1" : "-32.4" ;
+          // response.high = parseFloat(response.high) + new Date().getSeconds();
           /* HACK >>> ENDS */
 
           return response;

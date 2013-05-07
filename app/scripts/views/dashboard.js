@@ -52,7 +52,7 @@ define(
       },
 
       render : function() {
-        this.$el.html(this.template());
+        this.$el.html(this.template({avatar : localStorage.getItem('avatar')}));
         this._attachSelectors();
 
         this.extraViews.overview = new Overview();

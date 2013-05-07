@@ -1,6 +1,6 @@
 define(
-  ['backbone', 'dashboard'],
-  function(Backbone, DashboardView)  {
+  ['backbone', 'dashboard', 'login'],
+  function(Backbone, DashboardView, LoginView)  {
 
     return Backbone.Router.extend({
 
@@ -13,6 +13,7 @@ define(
 
       initialize : function() {
         this.views.dashboard = new DashboardView();
+        this.views.login = new LoginView();
       },
 
       /**
@@ -21,7 +22,8 @@ define(
        * @access private
        */
       _login : function() {
-        console.log('login page');
+        this.views.login.render();
+        // console.log('login page');
       },
 
       /**

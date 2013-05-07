@@ -29,11 +29,14 @@ define(
 
       render : function() {
         this.$el.html(this.template({data : this.model.toJSON()}));
+        this.renderChart();
         return this;
       },
 
       renderChart : function()  {
         this._attachSelectors();
+
+        /* Setting up D3 charting. */
         this.setup(380, 330, 20, '#' + this.model.get('id') + '-stock-chart');
       },
 
@@ -84,6 +87,7 @@ define(
 
       _updateD3DC : function()  {
         this.D3DC.add(Utility.YQLtoD3DCMapper(this.model));
+        this.updateChart(this.D3DC.toJSON());
       }
 
 

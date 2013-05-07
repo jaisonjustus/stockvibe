@@ -24,6 +24,7 @@ require.config({
     underscore : '../components/underscore-amd/underscore',
     tpl : '../components/requirejs-tpl/tpl',
     d3 : 'http://d3js.org/d3.v3.min',
+    crypto : 'vendor/md5',
 
     /* Custom Modules. */
     yql_finance_model : 'modules/yql_finance_model',
@@ -35,6 +36,7 @@ require.config({
     stock : 'models/stock',
     company : 'models/company',
     d3dm : 'models/D3DataModel',
+    user : 'models/user',
 
     /* Backbone Collections. */
     d3dc : 'collections/D3DataCollection',
@@ -43,7 +45,8 @@ require.config({
     dashboard : 'views/dashboard',
     snapshot : 'views/snapshot',
     overview : 'views/overview',
-    overview_partial : 'views/overview-partial'
+    overview_partial : 'views/overview-partial',
+    login : 'views/login'
   }
 });
 
