@@ -47,7 +47,9 @@ require.config({
     overview : 'views/overview',
     overview_partial : 'views/overview-partial',
     login : 'views/login',
-    inactive : 'views/inactive'
+    inactive : 'views/inactive',
+    notification : 'views/notification',
+    notification_partial : 'views/notification-partial'
   }
 });
 

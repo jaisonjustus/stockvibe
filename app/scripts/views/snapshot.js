@@ -17,17 +17,18 @@ define(
       template : SnapshotTpl,
 
       events : {
-        'click .close-snapshot' : '_onRemove'
+        'click .close-snapshot' : '_onRemove',
+        'click .alert-control' : '_onSetAlert'
       },
 
       initialize : function(options) {
         _.extend(this, D3Helper);
 
+        this.alert = { value : 0, cutoff : true };
         this.selectors = {};
         this.D3DC = new D3DC;
 
         this.model = new Stock({ id : options.id });
-        // this.model.set({ id : options.id });
         this.model.on('yqlFetchSuccess', this._updateView, this);
       },
 
@@ -57,6 +58,9 @@ define(
         this.selectors.changeText = this.$el.find('.change h1');
         this.selectors.changeStatus = this.$el.find('.change .status');
         this.selectors.remove = this.$el.find('.close-snapshot');
+        this.selectors.alertTxt = this.$el.find('.alert');
+        this.selectors.alertUp = this.$el.find('.alert-up');
+        this.selectors.alertDown = this.$el.find('.alert-down');
       },
 
       /**
@@ -66,6 +70,25 @@ define(
        * @access private
        */
       _updateView : function()  {
+
+        if(this.alert.value > 0) {
+          var data = { 
+            code : this.model.get('id'),
+            change : this.model.get('Change'),
+            current : this.model.get('LastTradePriceOnly')
+          };
+
+          if(this.alert.cutoff) {
+            if(parseFloat(this.model.get('LastTradePriceOnly')) > this.alert.value) {
+              this.trigger('stockAlertUp', 'stockUp', data);
+            }
+          }else {
+            if(parseFloat(this.model.get('LastTradePriceOnly')) < this.alert.value) {
+              this.trigger('stockAlertDown', 'stockDown', data);
+            }
+          }
+        }
+
         this.trigger('updateOverview', this.model.toJSON());
         this.selectors.current.html(this.model.get('LastTradePriceOnly'));
         this.selectors.low.html(this.model.get('DaysLow'));
@@ -102,8 +125,32 @@ define(
 
       _onRemove : function()  {
         this.trigger('removeSnapshot', this.model.get('id'));
-      }
+      },
 
+      _onSetAlert : function(event)  {
+        var cutoff = $(event.target).attr('data-cutoff'),
+            value = parseFloat(this.selectors.alertTxt.val());
+
+        if(value > 0 && cutoff !== 'clear') {
+          this.alert.value = value;
+          if(cutoff === 'up')  { 
+            this.selectors.alertUp.addClass('increase');
+            this.selectors.alertDown.removeClass('decrease');
+            this.alert.cutoff = true; 
+          }
+          else if(cutoff === 'down')  { 
+            this.selectors.alertDown.addClass('decrease');
+            this.selectors.alertUp.removeClass('increase');
+            this.alert.cutoff = false; 
+          }
+        }else if(cutoff === 'clear')  {
+          this.alert.value = 0;
+          this.alert.cutoff = true;
+          this.selectors.alertTxt.val('');
+          this.selectors.alertUp.removeClass('increase');
+          this.selectors.alertDown.removeClass('decrease'); 
+        }
+      }
 
     });
 

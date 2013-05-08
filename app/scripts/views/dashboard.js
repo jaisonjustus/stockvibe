@@ -4,8 +4,8 @@
  */
 define(
   ['backbone', 'stock', 'company', 'snapshot',
-   'overview', 'data_fetcher', 'tpl!../templates/dashboard-tpl.html'],
-  function(Backbone, Stock, Company, Snapshot, Overview, 
+   'overview', 'notification', 'data_fetcher', 'tpl!../templates/dashboard-tpl.html'],
+  function(Backbone, Stock, Company, Snapshot, Overview, Notification,
     DataFetcher, DashboardTpl)  {
 
     return Backbone.View.extend({
@@ -38,6 +38,11 @@ define(
 
       DataFetcherPorts : {},
 
+      notificationMessages : {
+        stockDown : 'Stock Alert - %code stock fall below your cutoff. Current: %current , Change: %change',
+        stockUp : 'Stock Alert - %code stock rise above your cutoff. Current: %current , Change: %change'
+      },
+
       events : {
         'click #add-code' : '_onAddCode',
         'click #code' : '_onCodeTxtClick'
@@ -57,7 +62,10 @@ define(
         this._attachSelectors();
 
         this.extraViews.overview = new Overview();
+        this.extraViews.notification = new Notification();
+
         this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
+        this.selectors.snapshotWrapper.append(this.extraViews.notification.render().$el);
 
         if(localStorage.getItem('snapshots') !== null)  {
           this.companies = JSON.parse(localStorage.getItem('snapshots'));  
@@ -79,8 +87,9 @@ define(
       _attachSelectors : function() {
         this.selectors.codeTxtBox = this.$el.find('#code');
         this.selectors.statusLabel = this.$el.find('#add-code-status');
-
         this.selectors.snapshotWrapper = this.$el.find('#stock-snapshots-wrapper');
+        // this.selectors.notification = this.$el.find('#notification-wrapper');
+        // this.selectors.notificationText = this.$el.find('#notification-text');
       },
 
       /**
@@ -139,8 +148,12 @@ define(
        */
       _addSnapshot : function(id) {
         this.snapshots[id] = new Snapshot({ id : id });
+
+        /* Attaching snapshot listeners. */
         this.snapshots[id].on('updateOverview', this._callOverview, this);
         this.snapshots[id].on('removeSnapshot', this._removeSnapshot, this);
+        this.snapshots[id].on('stockAlertUp', this._setNotification, this);
+        this.snapshots[id].on('stockAlertDown', this._setNotification, this);
 
         this.DataFetcherPorts[id] = new DataFetcher(id);
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
@@ -171,6 +184,21 @@ define(
 
       _onCodeTxtClick : function()  {
         this.selectors.statusLabel.html('Enter company code');
+      },
+
+      _setNotification : function(type, data) {
+        var message = this.notificationMessages[type],
+            replaceString = '%'+attr;
+
+        for(var attr in data) {
+          replaceString = '%' + attr;
+          message = message.replace(replaceString, data[attr]);
+        }
+
+        this.extraViews.notification.addNotification(message);
+
+        // this.selectors.notification.animate({"opacity" : "show"}, "fast");
+        // this.selectors.notificationText.html(message);
       }
 
     });

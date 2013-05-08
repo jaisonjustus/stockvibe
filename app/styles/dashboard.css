@@ -90,6 +90,35 @@ aside hgroup h1  {
   border: 1px solid #7f8c8d;
 }
 
+/* Dashboard Notification wrapper. */
+#notification-wrapper {
+  width: 92%;
+  height: auto;
+  padding: 2%;
+  border-radius: 5px;
+  background-color: #d35400;
+  margin:auto;
+  margin-top:10px;
+  margin-bottom: 0px;
+  overflow: hidden;
+  display: none;
+}
+
+#notification-wrapper p {
+  width: 90%;
+  height: auto;
+  font:15px "Source Sans Pro";
+  font-weight: 100;
+  color: #ecf0f1;
+  float: left;
+}
+
+#notification-wrapper i {
+  float: right;
+  font:16px "WebSymbolsRegular";
+  color: #ecf0f1;
+}
+
 /* Stock Snapshot content wrapper styling. */
 #stock-snapshots-wrapper  {
   width: 96%;
@@ -119,14 +148,16 @@ aside hgroup h1  {
   box-shadow: 0 4px 10px -4px #7f8c8d;
 }
 
-.note  {
+
+/* extra dashboard tiles.*/
+.note,.alert-tile  {
   background-color: #d35400 !important;
   border: 0 !important;
   /*box-shadow: none !important;*/
   padding-bottom: 0 !important;
 }
 
-.note p {
+.note p,.alert-tile  p {
   width: 94%;
   padding: 3%;
   font:15px "Source Sans Pro";
@@ -134,16 +165,16 @@ aside hgroup h1  {
   font-weight: 100;
   float: none !important;
   color:white !important;
-  margin: 10px 0px 10px 10px !important; 
+  margin: 10px 0px 10px 0px !important; 
 }
 
-.note ol {
+.note ol,.alert-tile ol {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.note ol li {
+.note ol li,.alert-tile ol li {
   width:380px;
   height: auto;
   overflow: hidden;
@@ -155,6 +186,16 @@ aside hgroup h1  {
   -webkit-box-sizing:border-box;
   border-bottom:1px solid #ecf0f1;
   padding: 5px 0px 5px 0px;
+}
+
+.alert-tile ol li p {
+  width: auto !important
+  font:16px "Source Sans Pro" !important;
+  font-weight:100 !important;
+  color: #7f8c8d !important;
+  margin:0;
+  padding: 0;
+  margin:0px 10px 0px 10px !important;
 }
 
 .note ol li .company{
@@ -177,6 +218,9 @@ aside hgroup h1  {
   color:#7f8c8d;
   vertical-align: middle;
 }
+
+
+
 
 .close-snapshot { 
   width:31px;
@@ -231,7 +275,8 @@ aside hgroup h1  {
   position: absolute;           
   text-align: center;           
   width: auto;                  
-  height: 22px;                 
+  /*height: 22px;                 */
+  height: auto;
   padding: 5px;             
   font: 12px "Source Sans Pro";
   color:white;
@@ -376,4 +421,12 @@ aside hgroup h1  {
 
 .decrease {
   color : #e74c3c !important;
+}
+
+.alert-control {
+  cursor: pointer;
+}
+
+.time {
+  color:#d35400;
 }

@@ -123,7 +123,7 @@ define(['utility','d3'], function(Utility)  {
       this.chart.selectAll("rect")
         .data(this.data)
         .enter().append("rect")
-          .attr("x", function(d) {console.log(d.time); return that.scale.x(d.time); })
+          .attr("x", function(d) { that.trigger('shiftx', that.scale.x(d.time)); return that.scale.x(d.time); })
           .attr("y", function(d) { return that.scale.y(d.value); })
           .attr("width", 1)
           .attr("height", function(d) {return that.viewport.height - that.scale.y(d.value); })
