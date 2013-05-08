@@ -7,9 +7,11 @@ define(
       idAttribute : "_id",
 
       defaults : {
-        "email" : 'user@stockvibe.com',
+        "name" : "user",
+        "email" : '',
         "password" : "user",
-        "avatar" : 'emailhash'
+        "avatar" : 'emailhash',
+        "snapshots" : [],
       },
 
       url : function()  {
@@ -25,12 +27,21 @@ define(
       },
 
       fetch : function()  {
-          this.url = 'https://api.mongolab.com/api/1/databases/stockvibe/collections/user?fo=true&';
+        this.url = 'https://api.mongolab.com/api/1/databases/stockvibe/collections/user?fo=true&';
+        
+        if(this.get('_id') !== '' || this.get('_id') !== null)  {
+          this.url += 'q=' + JSON.stringify({
+            _id : this.get('_id')
+          });
+        }else {
           this.url += 'q=' + JSON.stringify({
             email : this.get('email'),
             password : this.get('password')
           });
-          this.url += '&apiKey=4f6acab2e4b019347c6711c7';  
+        }
+
+        this.url += '&apiKey=4f6acab2e4b019347c6711c7';  
+          
 
         Backbone.Model.prototype.fetch.call(this);      
       }

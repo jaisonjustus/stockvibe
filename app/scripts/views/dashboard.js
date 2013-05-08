@@ -14,6 +14,8 @@ define(
 
       el : '#app-wrapper',
 
+      user : null,
+
       template : DashboardTpl,
 
       /* DOM Selectors. */
@@ -32,31 +34,40 @@ define(
       /* Object to keep track of snapshots created under this view. */
       snapshots : {},
 
+      userSnapshots : false,
+
       DataFetcherPorts : {},
 
       events : {
-        'click #add-code' : '_onAddCode'
+        'click #add-code' : '_onAddCode',
+        'click #code' : '_onCodeTxtClick'
       },
 
-      initialize : function() {
-
-        // this.updateModel = function(id, response, context)  {
-        //   context.snapshots[id].model.set(response);
-        //   context.snapshots[id]._updateView();
-        // }
-
-        // this.text = function()  {
-        //   console.log(this);
-        // }
-
+      initialize : function(options) {
+        this.user = options.model;
       },
 
       render : function() {
-        this.$el.html(this.template({avatar : localStorage.getItem('avatar')}));
+
+        this.$el.html(this.template({
+          avatar : localStorage.getItem('avatar'),
+          name : localStorage.getItem('name')
+        }));
+
         this._attachSelectors();
 
         this.extraViews.overview = new Overview();
         this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
+
+        if(localStorage.getItem('snapshots') !== null)  {
+          this.companies = JSON.parse(localStorage.getItem('snapshots'));  
+
+          this.companies.forEach(function(snaps)  {
+            this._addSnapshot(snaps);
+            this.extraViews.overview.renderPartial(snaps);
+          }, this);
+
+        }
       },
 
       /**
@@ -79,7 +90,7 @@ define(
        * @access private
        */
       _onAddCode : function() {
-        var code = this.selectors.codeTxtBox.val().toUpperCase();
+        var code = this.selectors.codeTxtBox.val().toUpperCase(); 
 
         if(code !== '') {
           this.company = new Company();
@@ -96,16 +107,28 @@ define(
        * @access private
        * @param object company
        */
-      _addCompany : function(company)  {
+      _addCompany : function()  {
         var details = this.company.toJSON();
 
-        if(details.price !== '0') {
-          this.companies.push(company);
-          this._addSnapshot(details.id);
-          this.extraViews.overview.renderPartial(details.id);
+        if(this.companies.indexOf(details.id) <= -1)  {
+          if(details.price !== '0') {
+            this.companies.push(details.id);
+
+            this._updateUserSnapshots();
+
+            this._addSnapshot(details.id);
+            this.extraViews.overview.renderPartial(details.id);
+          }else {
+            this.selectors.statusLabel.html('Invalid company!');
+          }
         }else {
-          this.selectors.statusLabel.html('Invalid company!!!');
+          this.selectors.statusLabel.html('Already in dashboard!');
         }
+      },
+
+      _updateUserSnapshots : function() {
+        this.user.set({ snapshots : this.companies });
+        this.user.save();
       },
 
       /**
@@ -117,9 +140,23 @@ define(
       _addSnapshot : function(id) {
         this.snapshots[id] = new Snapshot({ id : id });
         this.snapshots[id].on('updateOverview', this._callOverview, this);
+        this.snapshots[id].on('removeSnapshot', this._removeSnapshot, this);
+
         this.DataFetcherPorts[id] = new DataFetcher(id);
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
         this.snapshots[id].renderChart();
+      },
+
+      _removeSnapshot : function(id)  {
+        window.clearInterval(window[id]);
+        this.companies = this.companies.splice(this.companies.indexOf(id), 1);
+        this._updateUserSnapshots();
+        this.snapshots[id].remove();
+        this._removeCompanyFromOverview(id);
+      },
+
+      _removeCompanyFromOverview : function(id) {
+        this.extraViews.overview.removeCompany(id);
       },
 
       /**
@@ -129,7 +166,11 @@ define(
        * @access private
        */
       _callOverview : function(data)  {
-        this.extraViews.overview.updateOverview(data.id, data.change);
+        this.extraViews.overview.updateOverview(data.id, data.Change);
+      },
+
+      _onCodeTxtClick : function()  {
+        this.selectors.statusLabel.html('Enter company code');
       }
 
     });

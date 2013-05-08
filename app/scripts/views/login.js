@@ -27,14 +27,13 @@ define(
             if(!this.model.get('_id')){
               this.selector.errorNotification.animate({opacity : 'show'}, "slow");
             }else {
-              localStorage.setItem('id', this.model.get('_id').$oid);
-              localStorage.setItem('avatar', this.model.get('avatar'));
+              this._populateLocalStorageForDashboard();
               window.location.href = "/#/dashboard";
             }
           }else {
             if(this.model.get('_id')) {
-              localStorage.setItem('id', this.model.get('_id').$oid);
-              localStorage.setItem('avatar', this.model.get('avatar'));
+              this._populateLocalStorageForDashboard();
+              window.location.href = "/#/dashboard";
             }
           }
         }, this);
@@ -52,17 +51,20 @@ define(
         this.selector.errorNotification = this.$el.find('#error-notification');
         this.selector.message = this.$el.find('#message');
         this.selector.header = this.$el.find('#login-form-wrapper header h1');
+        this.selector.name = this.$el.find('#name');
         this.selector.email = this.$el.find('#email');
         this.selector.password = this.$el.find('#password');
       },
 
       _onSignUpToggle : function()  {
         if(this.state) {
+          this.selector.name.animate({opacity : 'show'}, "slow");
           this.selector.notification.animate({opacity : 'show'}, "slow");
           this.selector.button.val('Sign Up');
           this.selector.message.html('Already a User, <span id="sign-up-toggle">Login Here.</span>');
           this.selector.header.html('Sign up');
         }else {
+          this.selector.name.animate({opacity : 'hide'}, "slow");
           this.selector.notification.animate({opacity : 'hide'}, "slow");
           this.selector.button.val('Login');
           this.selector.message.html('New user, <span id="sign-up-toggle">Signup here.</span>');
@@ -82,6 +84,7 @@ define(
 
       _userSignUp : function() {
         this.model.set({
+          name : this.selector.name.val(),
           email : this.selector.email.val(),
           password : this.selector.password.val(),
           avatar : CryptoJS.MD5(this.selector.email.val()).toString()
@@ -97,6 +100,15 @@ define(
         });
 
         this.model.fetch();
+      },
+
+      _populateLocalStorageForDashboard : function(data)  {
+        data = (data) ? data : this.model;
+
+        localStorage.setItem('id', data.get('_id').$oid);
+        localStorage.setItem('avatar', data.get('avatar'));
+        localStorage.setItem('name', data.get('name'));
+        localStorage.setItem('snapshots', JSON.stringify(data.get('snapshots')));
       }
 
     });

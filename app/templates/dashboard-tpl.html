@@ -4,7 +4,7 @@
     <img src="http://www.gravatar.com/avatar/<%=avatar%>?s=60" alt="avatar"/>
     <hgroup>
       <h2>Welcome,</h2>
-      <h1>Jaison Justus</h1>
+      <h1><%=name%></h1>
     </hgroup>
   </aside>
 </header>
@@ -12,8 +12,8 @@
 <!-- Search and Add Section -->
 <section id="add-snapshot-wrapper">
   <i id="add-code" class="pull-right">+</i>
-  <input type="text" id="code" class="code pull-right"/>
-  <p id="add-code-status" class="pull-right">Enter the company code to add stock snapshot</p>
+  <input type="text" id="code" class="code pull-right" placeholder="GOOG,MSFT,YHOO"/>
+  <p id="add-code-status" class="pull-right">Enter company code</p>
 </section>
 
 <!-- Snapshot Section -->

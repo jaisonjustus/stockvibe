@@ -16,14 +16,18 @@ define(
 
       template : SnapshotTpl,
 
+      events : {
+        'click .close-snapshot' : '_onRemove'
+      },
+
       initialize : function(options) {
         _.extend(this, D3Helper);
 
         this.selectors = {};
         this.D3DC = new D3DC;
 
-        this.model = new Stock;
-        this.model.set({ id : options.id });
+        this.model = new Stock({ id : options.id });
+        // this.model.set({ id : options.id });
         this.model.on('yqlFetchSuccess', this._updateView, this);
       },
 
@@ -37,7 +41,7 @@ define(
         this._attachSelectors();
 
         /* Setting up D3 charting. */
-        this.setup(380, 330, 20, '#' + this.model.get('id') + '-stock-chart');
+        this.setup(380, 330, 20, '#' + this.model.get('id') + '-stock-chart', this.model.get('id'));
       },
 
       /**
@@ -52,6 +56,7 @@ define(
         this.selectors.open = this.$el.find('.open h1');
         this.selectors.changeText = this.$el.find('.change h1');
         this.selectors.changeStatus = this.$el.find('.change .status');
+        this.selectors.remove = this.$el.find('.close-snapshot');
       },
 
       /**
@@ -62,13 +67,13 @@ define(
        */
       _updateView : function()  {
         this.trigger('updateOverview', this.model.toJSON());
-        this.selectors.current.html(this.model.get('last'));
-        this.selectors.low.html(this.model.get('low'));
-        this.selectors.high.html(this.model.get('high'));
-        this.selectors.open.html(this.model.get('y_close'));
-        this.selectors.changeText.html(this.model.get('change'));
+        this.selectors.current.html(this.model.get('LastTradePriceOnly'));
+        this.selectors.low.html(this.model.get('DaysLow'));
+        this.selectors.high.html(this.model.get('DaysHigh'));
+        this.selectors.open.html(this.model.get('Open'));
+        this.selectors.changeText.html(this.model.get('Change'));
         
-        if(this.model.get('change').match(/\+/g)) {
+        if(this.model.get('Change').match(/\+/g)) {
           this.selectors.changeText.removeClass('decrease');
           this.selectors.changeText.addClass('increase');
 
@@ -87,7 +92,16 @@ define(
 
       _updateD3DC : function()  {
         this.D3DC.add(Utility.YQLtoD3DCMapper(this.model));
+        this.setData(this.D3DC.toJSON());
+        if(!this.extentCalculated) {
+          this.calculateExtentAndScale('*');
+          this.extentCalculated = true;
+        }
         this.updateChart(this.D3DC.toJSON());
+      },
+
+      _onRemove : function()  {
+        this.trigger('removeSnapshot', this.model.get('id'));
       }
 
 

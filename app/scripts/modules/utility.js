@@ -4,8 +4,8 @@ define(
 
     return {
       YQLtoD3DCMapper : function(YQLModel)  {
-        var change = YQLModel.get('change'),
-            last = parseFloat(YQLModel.get('y_close')),
+        var change = YQLModel.get('Change'),
+            last = parseFloat(YQLModel.get('Open')),
             changeObject = {},
             priv = {},
             that = this;
@@ -28,17 +28,18 @@ define(
 
         priv._getMappedObject = function(last, chageObject) {
           return {
-            value : (changeObject.polarity) ? (last + parseFloat(changeObject.value)) : (last - parseFloat(changeObject.value)),
-            time : that.calcuateTimeAtNYSE('-4'),
+            //value : (changeObject.polarity) ? (last + parseFloat(changeObject.value)) : (last - parseFloat(changeObject.value)),
+            value : YQLModel.get('LastTradePriceOnly'),
+            time : that.calculateTimeAtNYSE('-4').getTime(),
             polarity : changeObject.polarity
           }
         };
 
-        changeObject = priv._parseChange(change);
+        //changeObject = priv._parseChange(change);
         return priv._getMappedObject(last, changeObject);
       },
 
-      calcuateTimeAtNYSE : function(offset, date) {
+      calculateTimeAtNYSE : function(offset, date) {
         var dateObj = null,
             newDate = null;
         

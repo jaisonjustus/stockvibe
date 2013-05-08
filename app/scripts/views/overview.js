@@ -34,6 +34,11 @@ define(
 
       updateOverview : function(id, change) {
         this.views[id].update(change);
+      },
+
+      removeCompany : function(id)  {
+        console.log(id);
+        this.selectors.list.find('#'+id).remove();
       }
 
     });

@@ -25,7 +25,7 @@
   /*padding: 30px 0px 0px 5px;*/
 }
 
-#login-form-wrapper {
+#login-form-wrapper, #inactive-wrapper {
   width:380px;
   height: auto;
   /*padding: 20px;*/
@@ -127,4 +127,62 @@
 #sign-up-toggle {
   color:#d35400;
   cursor: pointer;
+}
+
+
+/* Style sheet for inactive. */
+#inactive-wrapper img {
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  margin:10px 0px 0px 0px;
+  float: left;
+}
+
+#inactive-wrapper hgroup  {
+  width:auto;
+  height: 80px;
+  min-width: 150px;
+  float: left;
+}
+
+#inactive-wrapper hgroup h2  {
+  width: 150px;
+  font:16px "Source Sans Pro";
+  font-weight: 200;
+  color:white;
+  /*display: inline;*/
+  text-align: left;
+  float: right;
+  line-height: 10px;
+  margin:26px 0px 0px 10px;
+}
+
+#inactive-wrapper hgroup h1  {
+  width: 150px;
+  font:20px "Source Sans Pro";
+  font-weight: 400;
+  color:white;
+  /*display: inline;*/
+  clear: right;
+  float: right;
+  margin: 0px 0px 0px 10px;
+}
+
+#info aside {
+  width: 100%;
+  font:14px "Source Sans Pro";
+  font-weight: 200;
+  padding: 10px 10px 10px 10px;
+  color:#7f8c8d;
+  background-color: #bdc3c7;
+}
+
+#time {
+  margin:auto;
+  font:40px "Source Sans Pro";
+  font-weight: 100;
+  padding: 10px 10px 10px 10px;
+  color:#7f8c8d;
+  text-align: center;
 }

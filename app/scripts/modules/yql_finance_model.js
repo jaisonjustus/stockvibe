@@ -36,22 +36,29 @@ define(
          have there own response structures. */
       openTable : 'yahoo',
 
-      initialize : function() {
+      initialize : function(options) {
 
         /* var to keep yahoo query. */
         this.YQL = null;
 
+        this.set({ id : options.id });
+
         /* Long polling open data tables. */
-        setInterval(
-          (function(self)  {
-            return function() {
-              if(self.longPolling && self.get('id') !== 'sym')  {
-                self.fetch({ context : self });
-              }
-            }
-          })(this), 
-          this.deafultPollingRate
-        );
+        // setInterval(
+        //   (function(self)  {
+        //     return function() {
+        //       if(self.longPolling && self.get('id') !== 'sym')  {
+        //         self.fetch({ context : self });
+        //       }
+        //     }
+        //   })(this), 
+        //   this.deafultPollingRate
+        // );
+        window[options.id] = window.setInterval(function()  {
+          if(this.longPolling && this.get('id') !== 'sym')  {
+            this.fetch({ context : this });
+          }
+        }.bind(this), this.deafultPollingRate)
       },
 
       /**
@@ -60,7 +67,11 @@ define(
        * @access private
        */
       _urlBuilder : function() {
-        this.YQL += "'" + this.get('id') + "'"
+        if(this.openTable.toLowerCase() === 'yahoo.finance.quotes') {
+          this.YQL += "('" + this.get('id') + "')";
+        }else {
+          this.YQL += "'" + this.get('id') + "'";
+        }
         this.url = this.apiUrl + this.YQL + '&format=' + this.format + '&env=' + this.env;
       },
 
@@ -119,12 +130,8 @@ define(
             response[attr] = response[attr]['data'];
           }
 
-          /* HACK >>> STARTS */
-          // response.change = (new Date().getSeconds() % 2 === 0) ? "+10.1" : "-32.4" ;
-          // response.high = parseFloat(response.high) + new Date().getSeconds();
-          /* HACK >>> ENDS */
-
           return response;
+
         }else if(this.openTable.toLowerCase() === 'yahoo.finance.oquote')  {
           if(response && response.hasOwnProperty('option')) {
             var temp = response['option'];
@@ -133,7 +140,10 @@ define(
           }else {
             return {};
           }
-          
+        }else if(this.openTable.toLowerCase() === 'yahoo.finance.quotes')  {
+          if(response && response.hasOwnProperty('quote'))  {
+            return response.quote;
+          }
         }
       }
     });

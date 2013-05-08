@@ -1,19 +1,25 @@
 define(
-  ['backbone', 'dashboard', 'login'],
-  function(Backbone, DashboardView, LoginView)  {
+  ['backbone', 'dashboard', 'login', 'inactive', 'user', 'utility'],
+  function(Backbone, DashboardView, LoginView, Inactive, User, Utility)  {
 
     return Backbone.Router.extend({
 
       views : {},
 
+      models : {},
+
       routes : {
         '' : '_login',
-        'dashboard' : '_dashboard'
+        'dashboard' : '_dashboard',
+        'inactive' : '_inactive',
       },
 
       initialize : function() {
-        this.views.dashboard = new DashboardView();
-        this.views.login = new LoginView();
+        this.models.user = new User();
+
+        this.views.dashboard = new DashboardView({ model : this.models.user });
+        this.views.login = new LoginView({ model : this.models.user });
+        this.views.inactive = new Inactive();
       },
 
       /**
@@ -22,8 +28,25 @@ define(
        * @access private
        */
       _login : function() {
-        this.views.login.render();
-        // console.log('login page');
+        if(localStorage.getItem('id') !== null)  {
+          this.models.user.set({
+            _id : { $oid : localStorage.getItem('id')},
+          });
+
+          this.models.user.fetch({ 
+            sucess : function()  {
+              if(this.models.user.get('email') === ''){
+                this.views.login.render();
+              }else {
+                this.views.login._populateLocalStorageForDashboard(this.models.user);
+                window.location.href = "/#/dashboard";
+              }
+            }
+          });
+
+        }else {
+          this.views.login.render();
+        }
       },
 
       /**
@@ -32,8 +55,22 @@ define(
        * @access private
        */
       _dashboard : function() {
-        this.views.dashboard.render();
-        console.log('dashboard page');
+        console.log(Utility.calculateTimeAtNYSE('-4').getHours());
+        if((Utility.calculateTimeAtNYSE('-4').getHours() <= 9 && 
+            Utility.calculateTimeAtNYSE('-4').getMinutes() <= 40) ||
+           Utility.calculateTimeAtNYSE('-4').getHours() >= 16) {
+        // if(Utility.calculateTimeAtNYSE('-4').getMinutes() < 09) {
+          
+          window.location.href = '/#/inactive';
+        }else {
+          window.clearInterval(window.inactiveTimer);
+
+          this.views.dashboard.render();
+        }
+      },
+
+      _inactive : function()  {
+        this.views.inactive.render();
       }
 
     });

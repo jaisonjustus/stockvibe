@@ -26,7 +26,9 @@ define(['utility','d3'], function(Utility)  {
 
     chart : null,
 
-    setup : function(width, height, margin, dom)  {
+    extentCalculated : false,
+
+    setup : function(width, height, margin, dom, id)  {
       this.viewport.width = width - margin;
       this.viewport.height = height - margin;
       this.viewport.margin = margin;
@@ -39,7 +41,7 @@ define(['utility','d3'], function(Utility)  {
           .attr("class", "tooltip")               
           .style("opacity", 0);
 
-      console.log("d3 setup");
+      console.log("d3 setup", this.tooltip);
 
       // this.initVisualizationCanvas();
       // this.setData(dataSet);
@@ -62,17 +64,19 @@ define(['utility','d3'], function(Utility)  {
 
     setData : function(dataSet)  {
       this.data = dataSet;
+      //this.calculateExtentAndScale('*');
     },
 
     updateChart : function(dataSet)  {
-      this.setData(dataSet);
-      this.calculateExtentAndScale('*');
+      //this.setData(dataSet);
+      this.calculateExtentAndScale('y');
       this.drawChart();
     },
 
     calculateExtentAndScale : function(cordinate)  {
       if(cordinate === 'x' || cordinate === '*') {
-console.log("calc : x");
+        console.log("calc : x");
+
         var date1 = new Date(),
             date2 = new Date();
 
@@ -80,13 +84,17 @@ console.log("calc : x");
            at us timing. */
         date1.setHours(19); date1.setMinutes(0); date1.setSeconds(0);
         date1.setHours(26); date1.setMinutes(0); date1.setSeconds(0);
-console.log(Utility);
-        date1 = Utility.calcuateTimeAtNYSE('-4', date1);
-        date2 = Utility.calcuateTimeAtNYSE('-4', date2);
 
-        console.log("Dates >>>>> ", date1, date2);
+        console.log(Utility);
 
-        this.extent.x = [date1.getTime(), date2.getTime()];
+        date1 = Utility.calculateTimeAtNYSE('-4', date1);
+        date2 = Utility.calculateTimeAtNYSE('-4', date2);
+
+        console.log("Dates >>>>> ", date2, date1);
+
+        this.extent.x = [date2.getTime(), date1.getTime()];
+
+        console.log(this.extent.x);
 
         this.scale.x = d3.time.scale()
                       .domain(this.extent.x)
@@ -95,8 +103,11 @@ console.log(Utility);
       }
 
       if(cordinate === 'y' || cordinate === '*')  {
-console.log("calc : y");
+        console.log("calc : y");
         this.extent.y = d3.extent(this.data, function(datum) { return datum.value; });
+        console.log("extent y: ",this.extent.y);
+        //this.extent.y[0] -= 3;
+        //this.extent.y[1] += 3;
 
         this.scale.y = d3.scale.linear()
                       .domain(this.extent.y)
@@ -112,20 +123,20 @@ console.log("calc : y");
       this.chart.selectAll("rect")
         .data(this.data)
         .enter().append("rect")
-          .attr("x", function(d) { return that.scale.x(d.time); })
+          .attr("x", function(d) {console.log(d.time); return that.scale.x(d.time); })
           .attr("y", function(d) { return that.scale.y(d.value); })
-          .attr("width", 2)
+          .attr("width", 1)
           .attr("height", function(d) {return that.viewport.height - that.scale.y(d.value); })
         .on("mouseover", function(d) {
-          this.tooltip.transition()        
+          that.tooltip.transition()        
             .duration(500)      
             .style("opacity", .9);      
-          this.tooltip.html(d.value)  
+          that.tooltip.html(d.value)  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");   
         })
         .on("mouseout", function() {       
-          this.tooltip.transition()        
+          that.tooltip.transition()        
             .duration(500)      
             .style("opacity", 0);   
         });

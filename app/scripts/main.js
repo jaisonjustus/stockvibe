@@ -46,7 +46,8 @@ require.config({
     snapshot : 'views/snapshot',
     overview : 'views/overview',
     overview_partial : 'views/overview-partial',
-    login : 'views/login'
+    login : 'views/login',
+    inactive : 'views/inactive'
   }
 });
 
