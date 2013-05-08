@@ -12,6 +12,7 @@ define(
         '' : '_login',
         'dashboard' : '_dashboard',
         'inactive' : '_inactive',
+        'logout' : '_logout'
       },
 
       initialize : function() {
@@ -68,6 +69,15 @@ define(
 
       _inactive : function()  {
         this.views.inactive.render();
+      },
+
+      _logout : function()  {
+        localStorage.removeItem('id');
+        localStorage.removeItem('name');
+        localStorage.removeItem('avatar');
+        localStorage.removeItem('snapshots');
+
+        window.location.href = '/';
       }
 
     });

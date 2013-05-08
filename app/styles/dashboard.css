@@ -14,14 +14,14 @@ header  {
   overflow: hidden;
 }
 
-header aside  {
+header #header-info  {
   width: auto;
   min-width: 300px;
   height: 80px;
   float: left;
 }
 
-aside img {
+#header-info img {
   width: 60px;
   height: 60px;
   border-radius: 60px;
@@ -29,14 +29,14 @@ aside img {
   float: left;
 }
 
-aside hgroup  {
+#header-info hgroup  {
   width:auto;
   height: 80px;
   min-width: 150px;
   float: left;
 }
 
-aside hgroup h2  {
+#header-info hgroup h2  {
   width: 150px;
   font:16px "Source Sans Pro";
   font-weight: 200;
@@ -48,7 +48,7 @@ aside hgroup h2  {
   margin:26px 0px 0px 10px;
 }
 
-aside hgroup h1  {
+#header-info hgroup h1  {
   width: 150px;
   font:20px "Source Sans Pro";
   font-weight: 400;
@@ -57,6 +57,29 @@ aside hgroup h1  {
   clear: right;
   float: right;
   margin: 0px 0px 0px 10px;
+}
+
+#header-logout  {
+  width: auto;
+  min-width: 300px;
+  height: 80px;
+  float: right;
+  cursor: pointer;
+}
+
+#header-logout p  {
+  float: right;
+  font:18px "Source Sans Pro";
+  font-weight: 100;
+  color:white;
+  margin-top:25px;
+}
+
+#header-logout i {
+  float:right;
+  font:20px "WebSymbolsRegular";
+  color:white;
+  margin:25px 5px 0px 0px;
 }
 
 /* Add Snapshot section styling. */

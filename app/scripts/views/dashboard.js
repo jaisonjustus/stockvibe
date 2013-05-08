@@ -45,7 +45,8 @@ define(
 
       events : {
         'click #add-code' : '_onAddCode',
-        'click #code' : '_onCodeTxtClick'
+        'click #code' : '_onCodeTxtClick',
+        'click #header-logout' : '_onLogout'
       },
 
       initialize : function(options) {
@@ -199,6 +200,10 @@ define(
 
         // this.selectors.notification.animate({"opacity" : "show"}, "fast");
         // this.selectors.notificationText.html(message);
+      },
+
+      _onLogout : function()  {
+        window.location.href = '/#/logout';
       }
 
     });
