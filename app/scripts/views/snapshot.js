@@ -18,7 +18,11 @@ define(
 
       events : {
         'click .close-snapshot' : '_onRemove',
-        'click .alert-control' : '_onSetAlert'
+        'click .alert-control' : '_onSetAlert',
+        'mouseover .scroll i' : '_onScrollMouseOver',
+        'mouseout .scroll i' : '_onScrollMouseOut',
+        'click .scroll-left i' : '_onScrollLeft',
+        'click .scroll-right i' : '_onScrollRight'
       },
 
       initialize : function(options) {
@@ -61,6 +65,7 @@ define(
         this.selectors.alertTxt = this.$el.find('.alert');
         this.selectors.alertUp = this.$el.find('.alert-up');
         this.selectors.alertDown = this.$el.find('.alert-down');
+        this.selectors.chartSlider = this.$el.find('.stock-chart-container');
       },
 
       /**
@@ -150,6 +155,40 @@ define(
           this.selectors.alertUp.removeClass('increase');
           this.selectors.alertDown.removeClass('decrease'); 
         }
+      },
+
+      _onScrollMouseOver : function(event) {
+        $(event.target).parent().stop().animate({'opacity' : 1}, "fast");
+      },
+
+      _onScrollMouseOut : function(event) {
+        $(event.target).parent().stop().animate({'opacity' : .2}, "fast");
+      },
+
+      _onScrollLeft : function()  {
+        var velocity = 0,
+            left = this.selectors.chartSlider.position().left;
+
+        if((left - 50) > -60)  { 
+          velocity = 0;
+        }else  { 
+          velocity = (left + 50); 
+        }
+
+        this.selectors.chartSlider.stop().animate({'left' : velocity}, "fast");
+      },
+
+      _onScrollRight : function() {
+        var velocity = 0,
+            left = this.selectors.chartSlider.position().left;
+
+        if((left + 50) < -4640)  { 
+          velocity = -4640;
+        }else  { 
+          velocity = (left - 50); 
+        }
+
+        this.selectors.chartSlider.stop().animate({'left' : velocity}, "fast");
       }
 
     });

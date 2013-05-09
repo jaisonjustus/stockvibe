@@ -34,8 +34,6 @@ define(
       /* Object to keep track of snapshots created under this view. */
       snapshots : {},
 
-      userSnapshots : false,
-
       DataFetcherPorts : {},
 
       notificationMessages : {
@@ -46,9 +44,7 @@ define(
       events : {
         'click #add-code' : '_onAddCode',
         'click #code' : '_onCodeTxtClick',
-        'click #header-logout' : '_onLogout',
-        'mouseover .scroll i' : '_onScrollMouseOver',
-        'mouseout .scroll i' : '_onScrollMouseOut'
+        'click #header-logout' : '_onLogout'
       },
 
       initialize : function(options) {
@@ -91,8 +87,6 @@ define(
         this.selectors.codeTxtBox = this.$el.find('#code');
         this.selectors.statusLabel = this.$el.find('#add-code-status');
         this.selectors.snapshotWrapper = this.$el.find('#stock-snapshots-wrapper');
-        // this.selectors.notification = this.$el.find('#notification-wrapper');
-        // this.selectors.notificationText = this.$el.find('#notification-text');
       },
 
       /**
@@ -158,7 +152,7 @@ define(
         this.snapshots[id].on('stockAlertUp', this._setNotification, this);
         this.snapshots[id].on('stockAlertDown', this._setNotification, this);
 
-        this.DataFetcherPorts[id] = new DataFetcher(id);
+        // this.DataFetcherPorts[id] = new DataFetcher(id);
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
         this.snapshots[id].renderChart();
       },
@@ -203,14 +197,6 @@ define(
 
       _onLogout : function()  {
         window.location.href = '/#/logout';
-      },
-
-      _onScrollMouseOver : function(event) {
-        $(event.target).parent().stop().animate({'opacity' : 1}, "fast");
-      },
-
-      _onScrollMouseOut : function(event) {
-        $(event.target).parent().stop().animate({'opacity' : .5}, "fast");
       }
 
     });
