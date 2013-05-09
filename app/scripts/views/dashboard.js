@@ -36,10 +36,6 @@ define(
 
       userSnapshots : false,
 
-      packeryContainer : null,
-
-      packery : null,
-
       DataFetcherPorts : {},
 
       notificationMessages : {
@@ -50,7 +46,9 @@ define(
       events : {
         'click #add-code' : '_onAddCode',
         'click #code' : '_onCodeTxtClick',
-        'click #header-logout' : '_onLogout'
+        'click #header-logout' : '_onLogout',
+        'mouseover .scroll i' : '_onScrollMouseOver',
+        'mouseout .scroll i' : '_onScrollMouseOut'
       },
 
       initialize : function(options) {
@@ -71,23 +69,6 @@ define(
 
         this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
         this.selectors.snapshotWrapper.append(this.extraViews.notification.render().$el);
-
-        // this.selectors.snapshotWrapper.masonry({
-        //   itemSelector: '.snapshots',
-        //   gutter: 380
-        // });
-// console.log(this.selectors.snapshotWrapper);
-
-        // this.packeryContainer = document.querySelector('#stock-snapshots-wrapper');
-
-        // this.packery = new Packery(this.packeryContainer, {
-        //   itemSelector: '.snapshot',
-        //   gutter : 5
-        // });
-        // $('#stock-snapshots-wrapper').packery({
-        //   itemSelector: '.snapshots',
-        //   gutter : 10
-        // });
 
         if(localStorage.getItem('snapshots') !== null)  {
           this.companies = JSON.parse(localStorage.getItem('snapshots'));  
@@ -178,15 +159,7 @@ define(
         this.snapshots[id].on('stockAlertDown', this._setNotification, this);
 
         this.DataFetcherPorts[id] = new DataFetcher(id);
-
-        // this.selectors.snapshotWrapper.masonry('destroy');
-        // this.packery.destroy();
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
-        // this.packery = new Packery(this.packeryContainer, {
-        //   itemSelector: '.snapshot',
-        //   gutter : 5
-        // });
-
         this.snapshots[id].renderChart();
       },
 
@@ -226,13 +199,18 @@ define(
         }
 
         this.extraViews.notification.addNotification(message);
-
-        // this.selectors.notification.animate({"opacity" : "show"}, "fast");
-        // this.selectors.notificationText.html(message);
       },
 
       _onLogout : function()  {
         window.location.href = '/#/logout';
+      },
+
+      _onScrollMouseOver : function(event) {
+        $(event.target).parent().stop().animate({'opacity' : 1}, "fast");
+      },
+
+      _onScrollMouseOut : function(event) {
+        $(event.target).parent().stop().animate({'opacity' : .5}, "fast");
       }
 
     });
