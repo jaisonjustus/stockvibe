@@ -29,7 +29,7 @@ define(
       addNotification : function(message)  {
         this.partial = new NotificationPartial();
         
-        if(this.selectors.list.children().length >= 5)  {
+        if(this.selectors.list.children().length >= 8)  {
           this.selectors.list.find('li').last().hide().remove();
         }
         this.selectors.list.prepend(this.partial.render(message).$el);

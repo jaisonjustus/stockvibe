@@ -144,18 +144,19 @@ header #header-info  {
 
 /* Stock Snapshot content wrapper styling. */
 #stock-snapshots-wrapper  {
-  width: 96%;
-  height: auto;
-  padding: 2%;
+  width: 98%;
+  height: auto !important;
+  padding: 1%;
   margin: 20px 0px 20px 0px;
   /*background-color: green;*/
   text-align: center;
+  overflow: hidden;
 }
 
 /* Stock snapshot styling. */
 .snapshot {
-  width: 380px;
-  height: auto;
+  width: 350px;
+  height: 560px;
   overflow: hidden;
   background-color: white;
   padding-bottom: 2%;
@@ -163,7 +164,11 @@ header #header-info  {
   text-align: none;
   /*border-bottom: 5px #ecf0f1 solid;*/
   position: relative;
-
+  /*float: left;*/
+  display: inline-table;
+  white-space: normal !important;
+  /*vertical-align: middle;*/
+  margin:auto;
   margin: 5px;
   box-shadow: 0px 0px 5px 1px #ecf0f1;
   -webkit-box-shadow: 0 8px 6px -6px #171817;
@@ -174,7 +179,7 @@ header #header-info  {
 
 /* extra dashboard tiles.*/
 .note,.alert-tile  {
-  background-color: #d35400 !important;
+  background-color: white !important;
   border: 0 !important;
   /*box-shadow: none !important;*/
   padding-bottom: 0 !important;
@@ -182,13 +187,14 @@ header #header-info  {
 
 .note p,.alert-tile  p {
   width: 94%;
-  padding: 3%;
+  padding:10px 3%;
   font:15px "Source Sans Pro";
   text-align: left;
   font-weight: 100;
   float: none !important;
   color:white !important;
-  margin: 10px 0px 10px 0px !important; 
+  background-color: #d35400;
+  margin: 0px 0px 10px 0px !important; 
 }
 
 .note ol,.alert-tile ol {
@@ -198,7 +204,7 @@ header #header-info  {
 }
 
 .note ol li,.alert-tile ol li {
-  width:380px;
+  width:350px;
   height: auto;
   overflow: hidden;
   background-color: white;
@@ -212,12 +218,13 @@ header #header-info  {
 }
 
 .alert-tile ol li p {
-  width: auto !important
+  width: auto !important;
   font:16px "Source Sans Pro" !important;
   font-weight:100 !important;
   color: #7f8c8d !important;
+  background-color: white !important;
   margin:0;
-  padding: 0;
+  padding: 0 !important;
   margin:0px 10px 0px 10px !important;
 }
 
@@ -282,7 +289,7 @@ header #header-info  {
 }
 
 .snapshot .stock-chart-container {
-  width: 380px;
+  width: 5040px;
   height: 330px;
   position: absolute;
   top:0px;

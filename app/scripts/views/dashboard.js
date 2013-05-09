@@ -36,6 +36,10 @@ define(
 
       userSnapshots : false,
 
+      packeryContainer : null,
+
+      packery : null,
+
       DataFetcherPorts : {},
 
       notificationMessages : {
@@ -67,6 +71,23 @@ define(
 
         this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
         this.selectors.snapshotWrapper.append(this.extraViews.notification.render().$el);
+
+        // this.selectors.snapshotWrapper.masonry({
+        //   itemSelector: '.snapshots',
+        //   gutter: 380
+        // });
+// console.log(this.selectors.snapshotWrapper);
+
+        // this.packeryContainer = document.querySelector('#stock-snapshots-wrapper');
+
+        // this.packery = new Packery(this.packeryContainer, {
+        //   itemSelector: '.snapshot',
+        //   gutter : 5
+        // });
+        // $('#stock-snapshots-wrapper').packery({
+        //   itemSelector: '.snapshots',
+        //   gutter : 10
+        // });
 
         if(localStorage.getItem('snapshots') !== null)  {
           this.companies = JSON.parse(localStorage.getItem('snapshots'));  
@@ -157,7 +178,15 @@ define(
         this.snapshots[id].on('stockAlertDown', this._setNotification, this);
 
         this.DataFetcherPorts[id] = new DataFetcher(id);
+
+        // this.selectors.snapshotWrapper.masonry('destroy');
+        // this.packery.destroy();
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
+        // this.packery = new Packery(this.packeryContainer, {
+        //   itemSelector: '.snapshot',
+        //   gutter : 5
+        // });
+
         this.snapshots[id].renderChart();
       },
 

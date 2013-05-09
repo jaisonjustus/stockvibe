@@ -106,8 +106,9 @@ define(['utility','d3'], function(Utility)  {
         console.log("calc : y");
         this.extent.y = d3.extent(this.data, function(datum) { return datum.value; });
         console.log("extent y: ",this.extent.y);
-        //this.extent.y[0] -= 3;
-        //this.extent.y[1] += 3;
+        this.extent.y[0] = parseInt(this.extent.y[0]) - 1;
+        this.extent.y[1] = parseInt(this.extent.y[1]) + 1;
+        console.log("extent y: ",this.extent.y);
 
         this.scale.y = d3.scale.linear()
                       .domain(this.extent.y)
@@ -125,7 +126,7 @@ define(['utility','d3'], function(Utility)  {
         .enter().append("rect")
           .attr("x", function(d) { that.trigger('shiftx', that.scale.x(d.time)); return that.scale.x(d.time); })
           .attr("y", function(d) { return that.scale.y(d.value); })
-          .attr("width", 1)
+          .attr("width", 2)
           .attr("height", function(d) {return that.viewport.height - that.scale.y(d.value); })
         .on("mouseover", function(d) {
           that.tooltip.transition()        

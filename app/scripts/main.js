@@ -12,7 +12,7 @@ require.config({
             'jquery'
         ],
         exports: 'Backbone'
-    },
+    }
   },
 
   /* Application Dependencies. */
@@ -25,6 +25,7 @@ require.config({
     tpl : '../components/requirejs-tpl/tpl',
     d3 : 'http://d3js.org/d3.v3.min',
     crypto : 'vendor/md5',
+
 
     /* Custom Modules. */
     yql_finance_model : 'modules/yql_finance_model',

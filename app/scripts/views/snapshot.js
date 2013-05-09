@@ -42,7 +42,7 @@ define(
         this._attachSelectors();
 
         /* Setting up D3 charting. */
-        this.setup(380, 330, 20, '#' + this.model.get('id') + '-stock-chart', this.model.get('id'));
+        this.setup(5040, 330, 20, '#' + this.model.get('id') + '-stock-chart', this.model.get('id'));
       },
 
       /**
