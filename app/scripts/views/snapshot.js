@@ -122,7 +122,7 @@ define(
         this.D3DC.add(Utility.YQLtoD3DCMapper(this.model));
         this.setData(this.D3DC.toJSON());
         if(!this.extentCalculated) {
-          this.calculateExtentAndScale('*');
+          this.calculateExtentScaleAndAxis('*');
           this.extentCalculated = true;
         }
         this.updateChart(this.D3DC.toJSON());

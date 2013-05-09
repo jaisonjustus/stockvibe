@@ -22,6 +22,11 @@ define(['utility','d3'], function(Utility)  {
       y : null
     },
 
+    axis : {
+      x : null,
+      y : null
+    },
+
     tooltip : null,
 
     chart : null,
@@ -29,7 +34,7 @@ define(['utility','d3'], function(Utility)  {
     extentCalculated : false,
 
     setup : function(width, height, margin, dom, id)  {
-      this.viewport.width = width - margin;
+      this.viewport.width = width - margin - 60;
       this.viewport.height = height - margin;
       this.viewport.margin = margin;
       this.dom = dom;
@@ -40,13 +45,6 @@ define(['utility','d3'], function(Utility)  {
         .append("div")   
           .attr("class", "tooltip")               
           .style("opacity", 0);
-
-      console.log("d3 setup", this.tooltip);
-
-      // this.initVisualizationCanvas();
-      // this.setData(dataSet);
-      // this.calculateExtentAndScale('*');
-      // this.renderChart();
     },
 
     initVisualizationCanvas : function()  {
@@ -54,72 +52,78 @@ define(['utility','d3'], function(Utility)  {
 
       this.chart = d3.select(that.dom)
         .append('svg')
-          .attr("width", that.viewport.width + that.viewport.margin)
+          .attr("width", that.viewport.width + that.viewport.margin + 60)
           .attr("height", that.viewport.height + that.viewport.margin)
         .append('g')
           .attr("class", "chart");
-
-      console.log(this.chart);
     },
 
     setData : function(dataSet)  {
       this.data = dataSet;
-      //this.calculateExtentAndScale('*');
     },
 
     updateChart : function(dataSet)  {
-      //this.setData(dataSet);
-      this.calculateExtentAndScale('y');
+      this.calculateExtentScaleAndAxis('y');
       this.drawChart();
     },
 
-    calculateExtentAndScale : function(cordinate)  {
+    calculateExtentScaleAndAxis : function(cordinate)  {
       if(cordinate === 'x' || cordinate === '*') {
-        console.log("calc : x");
-
         var date1 = new Date(),
             date2 = new Date();
 
         /* Setting date range. the time NYSE will be active from 9 AM to 2 PM
            at us timing. */
         date1.setHours(19); date1.setMinutes(0); date1.setSeconds(0);
-        date1.setHours(26); date1.setMinutes(0); date1.setSeconds(0);
-
-        console.log(Utility);
+        date2.setHours(26); date1.setMinutes(0); date1.setSeconds(0);
 
         date1 = Utility.calculateTimeAtNYSE('-4', date1);
         date2 = Utility.calculateTimeAtNYSE('-4', date2);
 
-        console.log("Dates >>>>> ", date2, date1);
+        this.extent.x = [date1.getTime(), date2.getTime()];
 
-        this.extent.x = [date2.getTime(), date1.getTime()];
+        this.scale.x = 
+          d3.time.scale()
+            .domain(this.extent.x)
+            .range([this.viewport.margin + 30, this.viewport.width]);
 
-        console.log(this.extent.x);
+        this.axis.x = 
+          d3.svg.axis()
+            .scale(this.scale.x)
+            .orient('bottom')
+            .ticks(7);
 
-        this.scale.x = d3.time.scale()
-                      .domain(this.extent.x)
-                      .range([this.viewport.margin, this.viewport.width]);
+        d3.select(this.dom)
+          .select('svg')
+          .append('g')
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + (this.viewport.height) + ")")
+          .call(this.axis.x);
 
       }
 
       if(cordinate === 'y' || cordinate === '*')  {
-        console.log("calc : y");
         this.extent.y = d3.extent(this.data, function(datum) { return datum.value; });
-        console.log("extent y: ",this.extent.y);
+
+        /* Adjusting y extend. */
         this.extent.y[0] = parseInt(this.extent.y[0]) - 1;
         this.extent.y[1] = parseInt(this.extent.y[1]) + 1;
-        console.log("extent y: ",this.extent.y);
 
-        this.scale.y = d3.scale.linear()
-                      .domain(this.extent.y)
-                      .range([this.viewport.height, this.viewport.margin]);
+        this.scale.y = 
+          d3.scale.linear()
+            .domain(this.extent.y)
+            .range([this.viewport.height, this.viewport.margin]);
+
+        this.axis.y = 
+          d3.svg.axis()
+            .scale(this.scale.y)
+            .orient('left')
+            .ticks(4);
       }
     },
 
     drawChart : function()  {
       var that = this;
-
-      console.log(that.scale.y);
 
       this.chart.selectAll("rect")
         .data(this.data)
@@ -141,6 +145,18 @@ define(['utility','d3'], function(Utility)  {
             .duration(500)      
             .style("opacity", 0);   
         });
+
+      d3.select(that.dom)
+        .select('svg')
+        .select('.y-axis')
+        .remove();
+
+      d3.select(that.dom)
+        .select('svg')
+        .append('g')
+          .attr('class','y-axis')
+          .attr("transform", "translate("+(this.viewport.margin + 30)+",0)")
+        .call(this.axis.y);
     }
   };
 

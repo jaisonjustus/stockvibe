@@ -324,7 +324,7 @@ header #header-info  {
   height: 330px;
   position: absolute;
   top:0px;
-  left:-50px;
+  left:0px;
 }
 
 .snapshot .stock-chart-container rect {
@@ -490,4 +490,29 @@ header #header-info  {
 
 .time {
   color:#d35400;
+}
+
+.x-axis, .y-axis {
+  font:12px "Source Sans Pro";
+  color:#bdc3c7;
+  stroke: #bdc3c7;
+  /*opacity: 0.7;*/
+}
+
+path {
+  fill:none; 
+  stroke:#bdc3c7; 
+  stroke-width:1px;
+}
+
+.tick {
+  fill:#bdc3c7;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
 }
