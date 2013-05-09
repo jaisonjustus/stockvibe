@@ -34,8 +34,7 @@ define(
       /* Object to keep track of snapshots created under this view. */
       snapshots : {},
 
-      DataFetcherPorts : {},
-
+      /* Notification messages for the dashboard. */
       notificationMessages : {
         stockDown : 'Stock Alert - %code stock fall below your cutoff. Current: %current , Change: %change',
         stockUp : 'Stock Alert - %code stock rise above your cutoff. Current: %current , Change: %change'
@@ -125,13 +124,18 @@ define(
             this._addSnapshot(details.id);
             this.extraViews.overview.renderPartial(details.id);
           }else {
-            this.selectors.statusLabel.html('Invalid company!');
+            this.selectors.statusLabel.html('Invalid code');
           }
         }else {
-          this.selectors.statusLabel.html('Already in dashboard!');
+          this.selectors.statusLabel.html('Check dashboard');
         }
       },
 
+      /**
+       * Method to persist details of newly added snapshot to mongodb.
+       * @method _updateUserSnapshots
+       * @access private
+       */
       _updateUserSnapshots : function() {
         this.user.set({ snapshots : this.companies });
         this.user.save();
@@ -157,6 +161,12 @@ define(
         this.snapshots[id].renderChart();
       },
 
+      /**
+       * Method to remove the snapshot from the dashboard.
+       * @method _removeSnapshot
+       * @access private
+       * @param string id
+       */
       _removeSnapshot : function(id)  {
         window.clearInterval(window[id]);
         this.companies = this.companies.splice(this.companies.indexOf(id), 1);
@@ -165,6 +175,13 @@ define(
         this._removeCompanyFromOverview(id);
       },
 
+      /**
+       * Remove th company details from the stock overview when its removed from
+       * the dashboard.
+       * @method _removeCompanyFromOverview
+       * @access private
+       * @param string id
+       */
       _removeCompanyFromOverview : function(id) {
         this.extraViews.overview.removeCompany(id);
       },
@@ -174,15 +191,28 @@ define(
        * stock snapshot.
        * @method _callOverview
        * @access private
+       * @param object data
        */
       _callOverview : function(data)  {
         this.extraViews.overview.updateOverview(data.id, data.Change);
       },
 
+      /**
+       * Method to reset the label for add company code.
+       * @method _onCodeTxtClick
+       * @access private
+       */
       _onCodeTxtClick : function()  {
-        this.selectors.statusLabel.html('Enter company code');
+        this.selectors.statusLabel.html('Company code');
       },
 
+      /**
+       * Method to set Notification for stock alerts.
+       * @method _setNotification
+       * @access private
+       * @param string type.
+       * @param object data
+       */
       _setNotification : function(type, data) {
         var message = this.notificationMessages[type],
             replaceString = '%'+attr;
@@ -195,6 +225,11 @@ define(
         this.extraViews.notification.addNotification(message);
       },
 
+      /**
+       * Method to handle user logout.
+       * @method _onLogOut
+       * @access private
+       */
       _onLogout : function()  {
         window.location.href = '/#/logout';
       }

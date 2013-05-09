@@ -43,17 +43,8 @@ define(
 
         this.set({ id : options.id });
 
-        /* Long polling open data tables. */
-        // setInterval(
-        //   (function(self)  {
-        //     return function() {
-        //       if(self.longPolling && self.get('id') !== 'sym')  {
-        //         self.fetch({ context : self });
-        //       }
-        //     }
-        //   })(this), 
-        //   this.deafultPollingRate
-        // );
+        /* Long polling open data tables. Adding timer to global to enforce
+           control from other views.*/
         window[options.id] = window.setInterval(function()  {
           if(this.longPolling && this.get('id') !== 'sym')  {
             this.fetch({ context : this });

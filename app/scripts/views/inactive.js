@@ -1,3 +1,7 @@
+/**
+ * Module to manage the inactive page. when the stock market is closed.
+ * @module Inactive
+ */
 define(
   ['backbone', 'utility','tpl!../templates/inactive-tpl.html'],
   function(Backbone, Utility, InactiveTpl)  {
@@ -16,10 +20,20 @@ define(
         this._countDown();
       },
 
+      /**
+       * Method to attach selector.
+       * @method _attachSelector
+       * @access public
+       */
       _attachSelector : function()  {
         this.selector.countDown = this.$el.find('#time');
       },
 
+      /**
+       * Method to handle the countdown timer.
+       * @method _coutDown
+       * @access private
+       */
       _countDown : function() {
         window.inactiveTimer = window.setInterval(function()  {
           var time = Utility.calculateTimeAtNYSE('-4'),

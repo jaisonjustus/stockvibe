@@ -1,3 +1,7 @@
+/**
+ * Data model for a single entity in the D3 Data collection.
+ * @module D3DM
+ */
 define(
   ['backbone'],
   function(Backbone)  {

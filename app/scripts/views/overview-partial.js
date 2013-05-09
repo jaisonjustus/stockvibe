@@ -1,3 +1,7 @@
+/**
+ * Sub view module of overview.
+ * @module OverviewPartial
+ */
 define(
   ['backbone', 'tpl!../templates/overview-partial-tpl.html'],
   function(Backbone, OverviewPartialTpl)  {
@@ -21,11 +25,22 @@ define(
         return this;
       },
 
+      /**
+       * Method to attachment commonly used DOM selector to selectors object
+       * @method _attachSelectors
+       * @access private
+       */
       _attachSelectors : function() {
         this.selectors.status = this.$el.find('.status');
         this.selectors.change = this.$el.find('.stock h1');
       },
 
+      /**
+       * Method to update the overview details.
+       * @method update
+       * @access public
+       * @param string change
+       */
       update : function(change) {
         if(change.match(/\+/g)) {
           this.selectors.status.removeClass('down-small');

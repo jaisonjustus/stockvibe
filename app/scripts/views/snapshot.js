@@ -1,5 +1,7 @@
 /**
- * Module to manage activties in stock snapshot view and data model.
+ * Module to manage activties in stock snapshot view and data model. 
+ * This module also extends properties from D3Helper Module for 
+ * visualization.
  * @module Snapshot
  */
 define(
@@ -42,6 +44,11 @@ define(
         return this;
       },
 
+      /**
+       * Method to trigger chart rendering.
+       * @method renderChart
+       * @access public
+       */
       renderChart : function()  {
         this._attachSelectors();
 
@@ -118,6 +125,11 @@ define(
         this._updateD3DC();
       },
 
+      /**
+       * Method to update the D3 Data collection.
+       * @method _updateD3DC
+       * @access private
+       */
       _updateD3DC : function()  {
         this.D3DC.add(Utility.YQLtoD3DCMapper(this.model));
         this.setData(this.D3DC.toJSON());
@@ -128,10 +140,21 @@ define(
         this.updateChart(this.D3DC.toJSON());
       },
 
+      /**
+       * Event handler for snapshot remove. 
+       * @method _onRemove
+       * @access private
+       */
       _onRemove : function()  {
         this.trigger('removeSnapshot', this.model.get('id'));
       },
 
+      /**
+       * Handler for data alert.
+       * @method _onSetAlert
+       * @access private
+       * @param object event
+       */
       _onSetAlert : function(event)  {
         var cutoff = $(event.target).attr('data-cutoff'),
             value = parseFloat(this.selectors.alertTxt.val());
@@ -157,14 +180,31 @@ define(
         }
       },
 
+      /**
+       * Handler when mouse over the scroll tab.
+       * @method _onScrollMouseOver
+       * @access private
+       * @param object event
+       */
       _onScrollMouseOver : function(event) {
         $(event.target).parent().stop().animate({'opacity' : 1}, "fast");
       },
 
+      /**
+       * Handler when mouse out the scroll tab.
+       * @method _onScrollMouseOut
+       * @access private
+       * @param object event
+       */
       _onScrollMouseOut : function(event) {
         $(event.target).parent().stop().animate({'opacity' : .2}, "fast");
       },
 
+      /**
+       * Handler when left scroll tab is clicked. also move the chart slider
+       * @method _onScrollLeft
+       * @access private
+       */
       _onScrollLeft : function()  {
         var velocity = 0,
             left = this.selectors.chartSlider.position().left;
@@ -178,6 +218,11 @@ define(
         this.selectors.chartSlider.stop().animate({'left' : velocity}, "fast");
       },
 
+      /**
+       * Handler when right scroll tab is clicked. also move the chart slider
+       * @method _onScrollRight
+       * @access private
+       */
       _onScrollRight : function() {
         var velocity = 0,
             left = this.selectors.chartSlider.position().left;

@@ -1,3 +1,7 @@
+/**
+ * Module to manage the notification sub view.
+ * @module NotificationPartial
+ */
 define(
   ['backbone', 'tpl!../templates/notification-partial-tpl.html'],
   function(Backbone, NotificationPartialTpl)  {

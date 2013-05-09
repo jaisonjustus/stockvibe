@@ -1,3 +1,7 @@
+/**
+ * Module to manage the login view.
+ * @module LoginView
+ */
 define(
   ['backbone', 'user','tpl!../templates/login-tpl.html', 'crypto'],
   function(Backbone, User, LoginTpl)  {
@@ -10,6 +14,8 @@ define(
 
       template : LoginTpl,
 
+      /* Maintain the state of the page, because the same view handle user
+         sign in and user sign up. */
       state : true,
 
       model : new User,
@@ -45,6 +51,11 @@ define(
         return this;
       },
 
+      /**
+       * Method to attach the dom selectors.
+       * @method _attachSelector
+       * @access private
+       */
       _attachSelector : function()  {
         this.selector.button = this.$el.find('#login');
         this.selector.notification = this.$el.find('#notification');
@@ -56,6 +67,11 @@ define(
         this.selector.password = this.$el.find('#password');
       },
 
+      /**
+       * Method to toggle between sign in template and sign up template.
+       * @method _onSignUpToggle
+       * @access private
+       */
       _onSignUpToggle : function()  {
         if(this.state) {
           this.selector.name.animate({opacity : 'show'}, "slow");
@@ -74,6 +90,11 @@ define(
         this.state = !this.state;
       },
 
+      /**
+       * Method to handle the functionality when the button is clicked.
+       * @method _onButtonClick
+       * @access private
+       */
       _onButtonClick : function() {
         if(!this.state) {
           this._userSignUp();
@@ -82,6 +103,11 @@ define(
         }
       },
 
+      /**
+       * Method to persist newly signed in user to the mongodb.
+       * @method _userSignUp
+       * @access private
+       */
       _userSignUp : function() {
         this.model.set({
           name : this.selector.name.val(),
@@ -93,6 +119,11 @@ define(
         this.model.save();
       },
 
+      /**
+       * Method to get the login user details.
+       * @method _userLogin
+       * @access private.
+       */
       _userlogin : function() {
         this.model.set({
           email : this.selector.email.val(),
@@ -102,6 +133,12 @@ define(
         this.model.fetch();
       },
 
+      /**
+       * Method to populate the localstorage with the user details.
+       * @method_populateLocalStorageForDashboard
+       * @access private
+       * @param object data
+       */
       _populateLocalStorageForDashboard : function(data)  {
         data = (data) ? data : this.model;
 

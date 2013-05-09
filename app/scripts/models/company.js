@@ -24,6 +24,7 @@ define(
         'openInterest': null
       },
 
+      /* Defining open table. */
       openTable : 'yahoo.finance.oquote',
 
       longPolling : false,

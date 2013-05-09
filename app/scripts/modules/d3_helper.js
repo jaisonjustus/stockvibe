@@ -1,38 +1,60 @@
+/**
+ * D3 Helper module for stock visualization.
+ * @module D3Helper
+ */
 define(['utility','d3'], function(Utility)  {
 
   return {
 
+    /* Canvas viewport properties. */
     viewport : {
       width : 0,
       height : 0,
       margin : 0
     },
 
+    /* Canvas dom holder. */
     dom : null,
 
+    /* Dataset for visualization. */
     data : [],
 
+    /* Object to keep track of chart region extends. */
     extent : {
       x : null,
       y : null
     },
 
+    /* Object to keep track of chart scale factor. */
     scale : {
       x : null,
       y : null
     },
 
+    /* Object to keep track of axis for charts. */
     axis : {
       x : null,
       y : null
     },
 
+    /* Maintain the tooltip pointer. */
     tooltip : null,
 
+    /* Maintain the chart object. */
     chart : null,
 
-    extentCalculated : false,
-
+    /**
+     * Method to setup the canvas region and other properties required for
+     * charting. Also initialize the canvas(prepare chart object) and prepare
+     * the tooltip.
+     * @method setup
+     * @acces public
+     * @param int width
+     * @param int height
+     * @param int margin
+     * @param string dom
+     * @param string id
+     */
     setup : function(width, height, margin, dom, id)  {
       this.viewport.width = width - margin - 60;
       this.viewport.height = height - margin;
@@ -47,6 +69,11 @@ define(['utility','d3'], function(Utility)  {
           .style("opacity", 0);
     },
 
+    /**
+     * Method to initialize the chart object.
+     * @method initVisualizationCanvas
+     * @access public
+     */
     initVisualizationCanvas : function()  {
       var that = this;
 
@@ -58,15 +85,35 @@ define(['utility','d3'], function(Utility)  {
           .attr("class", "chart");
     },
 
+    /**
+     * Method to set the dataSet.
+     * @method setData
+     * @access public
+     * @param array dataSet.
+     */
     setData : function(dataSet)  {
       this.data = dataSet;
     },
 
+    /**
+     * Method to update the chart render when a new data is pushed into
+     * the dataset.
+     * @method updateChart
+     * @access public
+     * @param array dataSet
+     */
     updateChart : function(dataSet)  {
       this.calculateExtentScaleAndAxis('y');
       this.drawChart();
     },
 
+    /**
+     * Method to calculate the chart properties like chart region extent, scale factor
+     * and axis.
+     * @method calculateExtentScaleAndAxis
+     * @access public
+     * @param string cordinate
+     */
     calculateExtentScaleAndAxis : function(cordinate)  {
       if(cordinate === 'x' || cordinate === '*') {
         var date1 = new Date(),
@@ -122,6 +169,11 @@ define(['utility','d3'], function(Utility)  {
       }
     },
 
+    /**
+     * Method to draw the chart into the canvas
+     * @method drawChart
+     * @access public
+     */
     drawChart : function()  {
       var that = this;
 

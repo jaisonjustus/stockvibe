@@ -1,3 +1,7 @@
+/**
+ * Module to manage notifications and its sub view.
+ * @module Notification
+ */
 define(
   ['backbone', 'notification_partial', 'tpl!../templates/notification-tpl.html'],
   function(Backbone, NotificationPartial, NotificationTpl)  {
@@ -22,10 +26,21 @@ define(
         return this;
       },
 
+      /**
+       * Method to attachment commonly used DOM selector to selectors object
+       * @method _attachSelectors
+       * @access private
+       */
       _attachSelector : function()  {
         this.selectors.list = this.$el.find('#notification-list');
       },
 
+      /**
+       * Method to add notification to the tile. 
+       * @method addNotification
+       * @access public
+       * @param string message
+       */
       addNotification : function(message)  {
         this.partial = new NotificationPartial();
         

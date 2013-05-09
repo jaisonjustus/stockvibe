@@ -1,3 +1,7 @@
+/**
+ * Data Collection module for D3 to generate graph for the stock.
+ * @module D3DC
+ */
 define(
   ['backbone', 'd3dm'],
   function(Backbone, D3DM)  {
