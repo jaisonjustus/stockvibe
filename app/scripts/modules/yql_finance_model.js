@@ -58,7 +58,7 @@ define(
        * @access private
        */
       _urlBuilder : function() {
-        if(this.openTable.toLowerCase() === 'yahoo.finance.quotes') {
+        if(this.openTable.toLowerCase() === 'yahoo.finance.quote') {
           this.YQL += "('" + this.get('id') + "')";
         }else {
           this.YQL += "'" + this.get('id') + "'";
@@ -131,7 +131,7 @@ define(
           }else {
             return {};
           }
-        }else if(this.openTable.toLowerCase() === 'yahoo.finance.quotes')  {
+        }else if(this.openTable.toLowerCase() === 'yahoo.finance.quote')  {
           if(response && response.hasOwnProperty('quote'))  {
             return response.quote;
           }

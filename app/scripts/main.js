@@ -32,6 +32,7 @@ require.config({
     utility : 'modules/utility',
     data_fetcher : 'modules/data_fetcher',
     d3_helper : 'modules/d3_helper',
+    stack_chart : 'modules/stack_chart',
 
     /* Backbone Models. */
     stock : 'models/stock',
@@ -50,7 +51,8 @@ require.config({
     login : 'views/login',
     inactive : 'views/inactive',
     notification : 'views/notification',
-    notification_partial : 'views/notification-partial'
+    notification_partial : 'views/notification-partial',
+    stack : 'views/stack'
   }
 });
 

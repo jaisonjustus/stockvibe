@@ -19,7 +19,7 @@ define(
       views : {},
 
       initialize : function() {
-        this.selectors = {}
+        this.selectors = {};
       },
 
       render : function() {

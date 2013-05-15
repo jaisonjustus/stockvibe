@@ -21,7 +21,7 @@ define(
       },
 
       /* Specifying open data table. */
-      openTable : 'yahoo.finance.quotes',
+      openTable : 'yahoo.finance.quote',
 
       /* Enabling Long Polling. */
       longPolling : true,
@@ -35,7 +35,7 @@ define(
         this.YQL = ['select', 
         ['Symbol','Change','DaysHigh','Dayslow', 'Name',
         'Open','LastTradePriceOnly'].join(','), 
-        'from yahoo.finance.quotes', 
+        'from yahoo.finance.quote', 
         'where symbol in '].join(' ');
       }
     });

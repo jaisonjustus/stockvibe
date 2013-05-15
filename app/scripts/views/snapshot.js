@@ -18,6 +18,12 @@ define(
 
       template : SnapshotTpl,
 
+      slide : {
+        width : 350,
+        maxWidth : 4050,
+        currentPosition : 0
+      },
+
       events : {
         'click .close-snapshot' : '_onRemove',
         'click .alert-control' : '_onSetAlert',
@@ -36,6 +42,8 @@ define(
 
         this.model = new Stock({ id : options.id });
         this.model.on('yqlFetchSuccess', this._updateView, this);
+
+        this.on('chartPlotOverflow', this._chartPlotOverflow);
       },
 
       render : function() {
@@ -132,6 +140,9 @@ define(
        */
       _updateD3DC : function()  {
         this.D3DC.add(Utility.YQLtoD3DCMapper(this.model));
+
+        this.trigger('updateD3DC', this.model.get('id'), this.D3DC);
+
         this.setData(this.D3DC.toJSON());
         if(!this.extentCalculated) {
           this.calculateExtentScaleAndAxis('*');
@@ -206,34 +217,60 @@ define(
        * @access private
        */
       _onScrollLeft : function()  {
-        var velocity = 0,
-            left = this.selectors.chartSlider.position().left;
+        var left = null;
 
-        if((left - 50) > -60)  { 
-          velocity = 0;
-        }else  { 
-          velocity = (left + 50); 
+        left = this.selectors.chartSlider.position().left;
+        this.slide.currentPosition = left + this.slide.width;
+
+        if(this.slide.currentPosition >= 0)  {
+          this.slide.currentPosition = 0;
         }
 
-        this.selectors.chartSlider.stop().animate({'left' : velocity}, "fast");
+        this.selectors.chartSlider.stop().animate({ 'left' : this.slide.currentPosition }, "fast");
       },
 
       /**
        * Handler when right scroll tab is clicked. also move the chart slider
        * @method _onScrollRight
        * @access private
+       * @param int position
        */
-      _onScrollRight : function() {
-        var velocity = 0,
-            left = this.selectors.chartSlider.position().left;
+      _onScrollRight : function(position) {
+        if(!position)  {
+          var left = null;
 
-        if((left + 50) < -4640)  { 
-          velocity = -4640;
-        }else  { 
-          velocity = (left - 50); 
+          left = this.selectors.chartSlider.position().left;
+          this.slide.currentPosition = left - this.slide.width;
+
+          if(this.slide.currentPosition <= (-1 * this.slide.maxWidth))  {
+            this.slide.currentPosition = (-1 * this.slide.maxWidth) + this.slide.width;
+          }
+        }else {
+          this.slide.currentPosition = position;
         }
 
-        this.selectors.chartSlider.stop().animate({'left' : velocity}, "fast");
+        console.log(position);
+
+        this.selectors.chartSlider.stop().animate({ 'left' : this.slide.currentPosition }, "fast");
+      },
+
+      _chartPlotOverflow : function(overflowPoint) {
+        console.log("overflow scrolling values (overflow and slide position) : ",overflowPoint, ((this.slide.currentPosition * -1) + this.slide.width));
+        if(this.slide.currentPosition === 0)  {
+          console.log("scrolling from 0 position.");
+          if(overflowPoint >= 0) {
+            var position = this.slide.width * Math.floor(overflowPoint/this.slide.width);
+
+            position *= -1;
+            this._onScrollRight(position);
+          }
+        }else {
+          if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width))  {
+            this._onScrollRight();
+          }else {
+            this._onScrollLeft();
+          }
+        } 
       }
 
     });

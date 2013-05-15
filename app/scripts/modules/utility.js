@@ -55,9 +55,11 @@ define(
          * @return object
          */
         priv._getMappedObject = function(last, chageObject) {
+          var date = that.calculateTimeAtNYSE('-4', new Date());
+          console.log(date);
           return {
             value : YQLModel.get('LastTradePriceOnly'),
-            time : that.calculateTimeAtNYSE('-4').getTime(),
+            time : date.getTime(),
             polarity : changeObject.polarity
           }
         };

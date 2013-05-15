@@ -61,7 +61,7 @@ define(['utility','d3'], function(Utility)  {
       this.viewport.margin = margin;
       this.dom = dom;
 
-      this.initVisualizationCanvas();
+      this._initVisualizationCanvas();
 
       this.tooltip = d3.select("body")
         .append("div")   
@@ -71,10 +71,10 @@ define(['utility','d3'], function(Utility)  {
 
     /**
      * Method to initialize the chart object.
-     * @method initVisualizationCanvas
-     * @access public
+     * @method _initVisualizationCanvas
+     * @access private
      */
-    initVisualizationCanvas : function()  {
+    _initVisualizationCanvas : function()  {
       var that = this;
 
       this.chart = d3.select(that.dom)
@@ -83,6 +83,8 @@ define(['utility','d3'], function(Utility)  {
           .attr("height", that.viewport.height + that.viewport.margin)
         .append('g')
           .attr("class", "chart");
+
+      console.log(this.dom);
     },
 
     /**
@@ -119,13 +121,13 @@ define(['utility','d3'], function(Utility)  {
         var date1 = new Date(),
             date2 = new Date();
 
-        /* Setting date range. the time NYSE will be active from 9 AM to 2 PM
-           at us timing. */
-        date1.setHours(19); date1.setMinutes(0); date1.setSeconds(0);
-        date2.setHours(26); date1.setMinutes(0); date1.setSeconds(0);
-
         date1 = Utility.calculateTimeAtNYSE('-4', date1);
         date2 = Utility.calculateTimeAtNYSE('-4', date2);
+
+        /* Setting date range. the time NYSE will be active from 9 AM to 2 PM
+           at us timing. */
+        date1.setHours(9); date1.setMinutes(30); date1.setSeconds(0);
+        date2.setHours(16); date1.setMinutes(0); date1.setSeconds(0);
 
         this.extent.x = [date1.getTime(), date2.getTime()];
 
@@ -180,7 +182,7 @@ define(['utility','d3'], function(Utility)  {
       this.chart.selectAll("rect")
         .data(this.data)
         .enter().append("rect")
-          .attr("x", function(d) { that.trigger('shiftx', that.scale.x(d.time)); return that.scale.x(d.time); })
+          .attr("x", function(d) { that.trigger('chartPlotOverflow', that.scale.x(d.time)); return that.scale.x(d.time); })
           .attr("y", function(d) { return that.scale.y(d.value); })
           .attr("width", 2)
           .attr("height", function(d) {return that.viewport.height - that.scale.y(d.value); })
