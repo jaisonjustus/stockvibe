@@ -12,10 +12,10 @@ define(
       idAttribute : "_id",
 
       defaults : {
-        "name" : "user",
+        "name" : '',
         "email" : '',
-        "password" : "user",
-        "avatar" : 'emailhash',
+        "password" : '',
+        "avatar" : '',
         "snapshots" : [],
       },
 
@@ -50,20 +50,22 @@ define(
        * @access public
        */
       fetch : function()  {
-        this.url = 'https://api.mongolab.com/api/1/databases/stockvibe/collections/user?fo=true&';
-        
-        if(this.get('_id') !== '' || this.get('_id') !== null)  {
-          this.url += 'q=' + JSON.stringify({
-            _id : this.get('_id')
-          });
+        this.url = 'https://api.mongolab.com/api/1/databases/stockvibe/collections/user';
+ 
+        if(this.get('_id') !== undefined)  {
+          // this.url += 'q=' + JSON.stringify({
+          //   _id : this.get('_id').$oid
+          // });
+          this.url += '/' + this.get('_id').$oid + '?';
         }else {
-          this.url += 'q=' + JSON.stringify({
+          this.url += '?fo=true&q=' + JSON.stringify({
             email : this.get('email'),
             password : this.get('password')
           });
+          this.url += '&';
         }
 
-        this.url += '&apiKey=4f6acab2e4b019347c6711c7';  
+        this.url += 'apiKey=4f6acab2e4b019347c6711c7';  
           
 
         Backbone.Model.prototype.fetch.call(this);      

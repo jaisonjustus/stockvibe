@@ -34,8 +34,9 @@ define(
             _id : { $oid : localStorage.getItem('id')},
           });
 
-          this.models.user.fetch({ 
-            sucess : function()  {
+          this.models.user.fetch({
+
+            success : function()  {
               if(this.models.user.get('email') === ''){
                 this.views.login.render();
               }else {
