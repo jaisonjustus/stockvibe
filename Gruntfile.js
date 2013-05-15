@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         },
         connect: {
             options: {
-                port: 3501,
+                port: 3000,
                 // change this to '0.0.0.0' to access the server from outside
                 hostname: '0.0.0.0'
             },
@@ -304,8 +304,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'jshint',
-        'test',
+        // 'jshint',
+        // 'test',
         'build'
     ]);
 };
