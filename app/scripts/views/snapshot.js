@@ -217,16 +217,7 @@ define(
        * @access private
        */
       _onScrollLeft : function()  {
-        var left = null;
-
-        left = this.selectors.chartSlider.position().left;
-        this.slide.currentPosition = left + this.slide.width;
-
-        if(this.slide.currentPosition >= 0)  {
-          this.slide.currentPosition = 0;
-        }
-
-        this.selectors.chartSlider.stop().animate({ 'left' : this.slide.currentPosition }, "fast");
+        this._scroll(false, false);
       },
 
       /**
@@ -235,39 +226,77 @@ define(
        * @access private
        * @param int position
        */
-      _onScrollRight : function(position) {
+      _onScrollRight : function() {
+        this._scroll(false, true);
+      },
+
+      /**
+       * Helper Method for chart container scrolling. scrolling is enabled only 
+       * in two direction left(direction representation : false) and 
+       * right(direction representation : true).
+       * @method _scroll
+       * @access private
+       * @param int position 
+       * @param boolean direction.
+       */
+      _scroll : function(position, direction)  {
         if(!position)  {
-          var left = null;
-
-          left = this.selectors.chartSlider.position().left;
-          this.slide.currentPosition = left - this.slide.width;
-
-          if(this.slide.currentPosition <= (-1 * this.slide.maxWidth))  {
-            this.slide.currentPosition = (-1 * this.slide.maxWidth) + this.slide.width;
-          }
+          var left = this.selectors.chartSlider.position().left;
+          if(direction) { this._scrollRight(left); }else { this._scrollLeft(left); }
         }else {
           this.slide.currentPosition = position;
         }
 
-        console.log(position);
-
         this.selectors.chartSlider.stop().animate({ 'left' : this.slide.currentPosition }, "fast");
       },
 
+      /**
+       * Method to calculate the velocity to scroll chart conatiner to right.
+       * @method  _scrollRight
+       * @access private
+       * @param int left
+       */
+      _scrollRight : function(left)  {
+        this.slide.currentPosition = left - this.slide.width;
+        if(this.slide.currentPosition <= (-1 * this.slide.maxWidth))  {
+          this.slide.currentPosition = (-1 * this.slide.maxWidth) + this.slide.width;
+        }
+      },
+
+      /**
+       * Method to calculate the velocity to scroll chart conatiner to left.
+       * @method  _scrollLeft
+       * @access private
+       * @param int left
+       */
+      _scrollLeft : function(left)  {
+        this.slide.currentPosition = left + this.slide.width;
+        if(this.slide.currentPosition >= 0)  {
+          this.slide.currentPosition = 0;
+        }
+      },
+
+      /**
+       * Method to initialize chart scrolling when the chart values get overflowed
+       * with respect to the maximum extent.
+       * @method _chartPlotOverflow
+       * @access private
+       * @param int overflowPoint
+       */
       _chartPlotOverflow : function(overflowPoint) {
-        console.log("overflow scrolling values (overflow and slide position) : ",overflowPoint, ((this.slide.currentPosition * -1) + this.slide.width));
         if(this.slide.currentPosition === 0)  {
-          console.log("scrolling from 0 position.");
           if(overflowPoint >= 0) {
             var position = this.slide.width * Math.floor(overflowPoint/this.slide.width);
 
             position *= -1;
-            this._onScrollRight(position);
+            this._scroll(position, true);
           }
         }else {
-          if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width))  {
-            this._onScrollRight();
-          }else {
+          if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width) &&
+              overflowPoint <= this.slide.maxWidth)  {
+            this._scrollRight();
+          }else if(overflowPoint < (this.slide.currentPosition * -1) &&
+              overflowPoint >= 0) {
             this._onScrollLeft();
           }
         } 
