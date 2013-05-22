@@ -20,7 +20,7 @@ define(
 
       slide : {
         width : 350,
-        maxWidth : 4050,
+        maxWidth : 5040,
         currentPosition : 0
       },
 
