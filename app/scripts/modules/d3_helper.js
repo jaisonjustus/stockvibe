@@ -83,8 +83,6 @@ define(['utility','d3'], function(Utility)  {
           .attr("height", that.viewport.height + that.viewport.margin)
         .append('g')
           .attr("class", "chart");
-
-      console.log(this.dom);
     },
 
     /**
@@ -140,7 +138,8 @@ define(['utility','d3'], function(Utility)  {
           d3.svg.axis()
             .scale(this.scale.x)
             .orient('bottom')
-            .ticks(7);
+            .ticks(60)
+            .tickSize(-this.viewport.height, 0, 0);
 
         d3.select(this.dom)
           .select('svg')
@@ -167,7 +166,7 @@ define(['utility','d3'], function(Utility)  {
           d3.svg.axis()
             .scale(this.scale.y)
             .orient('left')
-            .ticks(4);
+            .ticks(10);
       }
     },
 
@@ -184,7 +183,7 @@ define(['utility','d3'], function(Utility)  {
         .enter().append("rect")
           .attr("x", function(d) { that.trigger('chartPlotOverflow', that.scale.x(d.time)); return that.scale.x(d.time); })
           .attr("y", function(d) { return that.scale.y(d.value); })
-          .attr("width", 2)
+          .attr("width", 4)
           .attr("height", function(d) {return that.viewport.height - that.scale.y(d.value); })
         .on("mouseover", function(d) {
           that.tooltip.transition()        

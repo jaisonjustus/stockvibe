@@ -26,13 +26,11 @@ require.config({
     d3 : 'http://d3js.org/d3.v3.min',
     crypto : 'vendor/md5',
 
-
     /* Custom Modules. */
     yql_finance_model : 'modules/yql_finance_model',
     utility : 'modules/utility',
     data_fetcher : 'modules/data_fetcher',
     d3_helper : 'modules/d3_helper',
-    stack_chart : 'modules/stack_chart',
 
     /* Backbone Models. */
     stock : 'models/stock',
@@ -52,7 +50,6 @@ require.config({
     inactive : 'views/inactive',
     notification : 'views/notification',
     notification_partial : 'views/notification-partial',
-    stack : 'views/stack'
   }
 });
 

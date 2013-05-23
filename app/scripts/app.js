@@ -57,15 +57,15 @@ define(
        * @access private
        */
       _dashboard : function() {
-        // if((Utility.calculateTimeAtNYSE('-4').getHours() <= 9 && 
-        //     Utility.calculateTimeAtNYSE('-4').getMinutes() <= 40) ||
-        //    Utility.calculateTimeAtNYSE('-4').getHours() >= 16) {
-          // window.location.href = '/#/inactive';
-        // }else {
-          // window.clearInterval(window.inactiveTimer);
+        if((Utility.calculateTimeAtNYSE('-4').getHours() <= 9 && 
+            Utility.calculateTimeAtNYSE('-4').getMinutes() <= 40) ||
+           Utility.calculateTimeAtNYSE('-4').getHours() >= 16) {
+          window.location.href = '/#/inactive';
+        }else {
+          window.clearInterval(window.inactiveTimer);
 
           this.views.dashboard.render();
-        // }
+        }
       },
 
       _inactive : function()  {

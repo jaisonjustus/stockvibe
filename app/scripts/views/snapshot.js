@@ -18,12 +18,6 @@ define(
 
       template : SnapshotTpl,
 
-      slide : {
-        width : 350,
-        maxWidth : 5040,
-        currentPosition : 0
-      },
-
       events : {
         'click .close-snapshot' : '_onRemove',
         'click .alert-control' : '_onSetAlert',
@@ -36,6 +30,12 @@ define(
       initialize : function(options) {
         _.extend(this, D3Helper);
 
+        this.slide = {
+          width : 350,
+          maxWidth : 17640,
+          currentPosition : 0
+        };
+
         this.alert = { value : 0, cutoff : true };
         this.selectors = {};
         this.D3DC = new D3DC;
@@ -43,7 +43,7 @@ define(
         this.model = new Stock({ id : options.id });
         this.model.on('yqlFetchSuccess', this._updateView, this);
 
-        this.on('chartPlotOverflow', this._chartPlotOverflow);
+        this.on('chartPlotOverflow', this._chartPlotOverflow, this);
       },
 
       render : function() {
@@ -61,7 +61,7 @@ define(
         this._attachSelectors();
 
         /* Setting up D3 charting. */
-        this.setup(5040, 330, 20, '#' + this.model.get('id') + '-stock-chart', this.model.get('id'));
+        this.setup(17640, 330, 20, '#' + this.model.get('id') + '-stock-chart', this.model.get('id'));
       },
 
       /**
@@ -240,6 +240,8 @@ define(
        * @param boolean direction.
        */
       _scroll : function(position, direction)  {
+        console.log('scrolling position : ', position, direction);
+
         if(!position)  {
           var left = this.selectors.chartSlider.position().left;
           if(direction) { this._scrollRight(left); }else { this._scrollLeft(left); }
@@ -284,22 +286,26 @@ define(
        * @param int overflowPoint
        */
       _chartPlotOverflow : function(overflowPoint) {
-        if(this.slide.currentPosition === 0)  {
+        console.log("chart overflow.");
+        console.log(overflowPoint);
+
+        // if(this.slide.currentPosition === 0)  {
           if(overflowPoint >= 0) {
             var position = this.slide.width * Math.floor(overflowPoint/this.slide.width);
 
             position *= -1;
             this._scroll(position, true);
           }
-        }else {
-          if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width) &&
-              overflowPoint <= this.slide.maxWidth)  {
-            this._scrollRight();
-          }else if(overflowPoint < (this.slide.currentPosition * -1) &&
-              overflowPoint >= 0) {
-            this._onScrollLeft();
-          }
-        } 
+        // }else {
+        //   console.log("oveflow !0 : ", overflowPoint, (this.slide.currentPosition * -1) + this.slide.width);
+        //   if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width) &&
+        //       overflowPoint <= this.slide.maxWidth)  {
+        //     this._scrollRight(this.selectors.chartSlider.position().left);
+        //   }else if(overflowPoint < (this.slide.currentPosition * -1) &&
+        //       overflowPoint >= 0) {
+        //     this._onScrollLeft();
+        //   }
+        // } 
       }
 
     });

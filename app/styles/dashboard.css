@@ -320,7 +320,8 @@ header #header-info  {
 }
 
 .snapshot .stock-chart-container {
-  width: 5040px;
+  /*width: 5040px;*/
+  width : 17640px;
   height: 330px;
   position: absolute;
   top:0px;
