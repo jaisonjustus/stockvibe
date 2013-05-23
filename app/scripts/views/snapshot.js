@@ -240,8 +240,6 @@ define(
        * @param boolean direction.
        */
       _scroll : function(position, direction)  {
-        console.log('scrolling position : ', position, direction);
-
         if(!position)  {
           var left = this.selectors.chartSlider.position().left;
           if(direction) { this._scrollRight(left); }else { this._scrollLeft(left); }
@@ -286,26 +284,12 @@ define(
        * @param int overflowPoint
        */
       _chartPlotOverflow : function(overflowPoint) {
-        console.log("chart overflow.");
-        console.log(overflowPoint);
+        if(overflowPoint >= 0) {
+          var position = this.slide.width * Math.floor(overflowPoint/this.slide.width);
 
-        // if(this.slide.currentPosition === 0)  {
-          if(overflowPoint >= 0) {
-            var position = this.slide.width * Math.floor(overflowPoint/this.slide.width);
-
-            position *= -1;
-            this._scroll(position, true);
-          }
-        // }else {
-        //   console.log("oveflow !0 : ", overflowPoint, (this.slide.currentPosition * -1) + this.slide.width);
-        //   if(overflowPoint > ((this.slide.currentPosition * -1) + this.slide.width) &&
-        //       overflowPoint <= this.slide.maxWidth)  {
-        //     this._scrollRight(this.selectors.chartSlider.position().left);
-        //   }else if(overflowPoint < (this.slide.currentPosition * -1) &&
-        //       overflowPoint >= 0) {
-        //     this._onScrollLeft();
-        //   }
-        // } 
+          position *= -1;
+          this._scroll(position, true);
+        } 
       }
 
     });

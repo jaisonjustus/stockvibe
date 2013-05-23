@@ -61,11 +61,9 @@ define(
 
         this.extraViews.overview = new Overview();
         this.extraViews.notification = new Notification();
-        //this.extraViews.stack = new Stack();
 
         this.selectors.snapshotWrapper.append(this.extraViews.overview.render().$el);
         this.selectors.snapshotWrapper.append(this.extraViews.notification.render().$el);
-        //this.selectors.snapshotWrapper.append(this.extraViews.stack.render().$el);
 
         if(localStorage.getItem('snapshots') !== null)  {
           this.companies = JSON.parse(localStorage.getItem('snapshots'));  
@@ -129,8 +127,6 @@ define(
 
             this._addSnapshot(details.id);
             this.extraViews.overview.renderPartial(details.id);
-
-            //this.extraViews.stack.setD3DCs(details.id);
           }else {
             this.selectors.statusLabel.html('Invalid code');
           }
@@ -160,12 +156,10 @@ define(
 
         /* Attaching snapshot listeners. */
         this.snapshots[id].on('updateOverview', this._callOverview, this);
-        //this.snapshots[id].on('updateD3DC', this._callStack, this);
         this.snapshots[id].on('removeSnapshot', this._removeSnapshot, this);
         this.snapshots[id].on('stockAlertUp', this._setNotification, this);
         this.snapshots[id].on('stockAlertDown', this._setNotification, this);
 
-        // this.DataFetcherPorts[id] = new DataFetcher(id);
         this.selectors.snapshotWrapper.append(this.snapshots[id].render().$el);
         this.snapshots[id].renderChart();
       },
@@ -178,7 +172,6 @@ define(
        */
       _removeSnapshot : function(id)  {
         window.clearInterval(window[id]);
-        console.log(this.companies, this.companies.indexOf(id));
         this.companies.splice(this.companies.indexOf(id), 1);
         this._updateUserSnapshots();
         this.snapshots[id].remove();
@@ -206,11 +199,6 @@ define(
       _callOverview : function(data)  {
         this.extraViews.overview.updateOverview(data.id, data.Change);
       },
-
-      // _callStack : function(id, D3DC) {
-      //   this.extraViews.stack.setD3DCs(id, D3DC);
-      //   this.extraViews.stack.prepareStack();
-      // },
 
       /**
        * Method to reset the label for add company code.

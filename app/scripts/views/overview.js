@@ -67,7 +67,6 @@ define(
        * @param string id
        */
       removeCompany : function(id)  {
-        console.log(id);
         this.selectors.list.find('#'+id).remove();
       }
 

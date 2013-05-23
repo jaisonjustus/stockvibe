@@ -53,9 +53,6 @@ define(
         this.url = 'https://api.mongolab.com/api/1/databases/stockvibe/collections/user';
  
         if(this.get('_id') !== undefined)  {
-          // this.url += 'q=' + JSON.stringify({
-          //   _id : this.get('_id').$oid
-          // });
           this.url += '/' + this.get('_id').$oid + '?';
         }else {
           this.url += '?fo=true&q=' + JSON.stringify({
