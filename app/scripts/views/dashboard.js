@@ -246,7 +246,7 @@ define(
        * @access private
        */
       _onLogout : function()  {
-        window.location.href = '/#/logout';
+        window.location.href = window.location.origin + window.location.pathname + '/#/logout';
       }
 
     });
