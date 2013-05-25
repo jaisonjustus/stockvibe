@@ -11,6 +11,7 @@ ____________________
 - install yeoman by `npm install yo`.
 - install yeoman backbone generator `npm install generator-backbone`.
 - Goto project directory and install the application depenedencies by running `bower install`.
+- Install grunt node modules - `npm install`.
 - To running the server by `grunt server`.
 - To make builds - `grunt`
 
