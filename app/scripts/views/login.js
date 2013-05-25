@@ -3,8 +3,8 @@
  * @module LoginView
  */
 define(
-  ['backbone', 'user','tpl!../templates/login-tpl.html', 'crypto'],
-  function(Backbone, User, LoginTpl)  {
+  ['backbone', 'user', 'config','tpl!../templates/login-tpl.html', 'crypto'],
+  function(Backbone, User, Config, LoginTpl)  {
 
     return Backbone.View.extend({
 
@@ -34,12 +34,12 @@ define(
               this.selector.errorNotification.animate({opacity : 'show'}, "slow");
             }else {
               this._populateLocalStorageForDashboard();
-              window.location.href = "/#/dashboard";
+              window.location.href = Config.App.url + "/#/dashboard";
             }
           }else {
             if(this.model.get('_id')) {
               this._populateLocalStorageForDashboard();
-              window.location.href = "/#/dashboard";
+              window.location.href = Config.App.url + "/#/dashboard";
             }
           }
         }, this);
