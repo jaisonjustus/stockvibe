@@ -15,7 +15,10 @@ define(
       selector : {},
 
       render : function() {
-        this.$el.html(this.template({ avatar : localStorage.getItem('avatar') }));
+        this.$el.html(this.template({ 
+          avatar : localStorage.getItem('avatar'),
+          name : localStorage.getItem('name')
+        }));
         this._attachSelector();
         this._countDown();
       },

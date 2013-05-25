@@ -8,7 +8,8 @@ define([], function()	{
 
 		/* Basic app configurations. */
 		App : {
-			url : 'http://jaisonjustus.github.io/stockvibe'
+			// url : 'http://jaisonjustus.github.io/stockvibe'
+			url : 'http://localhost:3000'
 		},
 
 		/* Mongolab configurations. */
