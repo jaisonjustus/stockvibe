@@ -1,6 +1,6 @@
 define(
-  ['backbone', 'dashboard', 'login', 'inactive', 'user', 'utility'],
-  function(Backbone, DashboardView, LoginView, Inactive, User, Utility)  {
+  ['backbone', 'dashboard', 'login', 'inactive', 'user', 'utility', 'config'],
+  function(Backbone, DashboardView, LoginView, Inactive, User, Utility, Config)  {
 
     return Backbone.Router.extend({
 
@@ -41,7 +41,7 @@ define(
                 this.views.login.render();
               }else {
                 this.views.login._populateLocalStorageForDashboard(this.models.user);
-                window.location.href = window.location.origin + window.location.pathname + "/#/dashboard";
+                window.location.href = Config.App.url + '/#/dashboard';
               }
             }
           });
@@ -60,7 +60,7 @@ define(
         if((Utility.calculateTimeAtNYSE('-4').getHours() <= 9 && 
             Utility.calculateTimeAtNYSE('-4').getMinutes() <= 40) ||
            Utility.calculateTimeAtNYSE('-4').getHours() >= 16) {
-          window.location.href = window.location.origin + window.location.pathname + '/#/inactive';
+          window.location.href = Config.App.url + '/#/inactive';
         }else {
           window.clearInterval(window.inactiveTimer);
 
@@ -78,7 +78,7 @@ define(
         localStorage.removeItem('avatar');
         localStorage.removeItem('snapshots');
 
-        window.location.href = window.location.origin + window.location.pathname;
+        window.location.href = Config.App.url;
       }
 
     });

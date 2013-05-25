@@ -31,6 +31,7 @@ require.config({
     utility : 'modules/utility',
     data_fetcher : 'modules/data_fetcher',
     d3_helper : 'modules/d3_helper',
+    config : 'modules/config',
 
     /* Backbone Models. */
     stock : 'models/stock',

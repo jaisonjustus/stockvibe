@@ -3,8 +3,8 @@
  * @module Inactive
  */
 define(
-  ['backbone', 'utility','tpl!../templates/inactive-tpl.html'],
-  function(Backbone, Utility, InactiveTpl)  {
+  ['backbone', 'utility', 'config', 'tpl!../templates/inactive-tpl.html'],
+  function(Backbone, Utility, Config, InactiveTpl)  {
 
     return Backbone.View.extend({
 
@@ -39,7 +39,7 @@ define(
           var time = Utility.calculateTimeAtNYSE('-4'),
               timeString = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds() + ' 24hrs (ETZ)';
           if(time.getHours() >= 9 && time.getMinutes() >= 41) {
-            window.location.href = window.location.origin + window.location.pathname + "/#/dashboard";
+            window.location.href = Config.App.url + "/#/dashboard";
           }
           this.selector.countDown.html(timeString);
         }.bind(this), 1000)

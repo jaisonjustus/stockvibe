@@ -4,9 +4,9 @@
  */
 define(
   ['backbone', 'stock', 'company', 'snapshot',
-   'overview', 'notification', 'data_fetcher', 'tpl!../templates/dashboard-tpl.html'],
+   'overview', 'notification', 'config', 'tpl!../templates/dashboard-tpl.html'],
   function(Backbone, Stock, Company, Snapshot, Overview, Notification,
-    DataFetcher, DashboardTpl)  {
+    Config, DashboardTpl)  {
 
     return Backbone.View.extend({
 
@@ -234,7 +234,7 @@ define(
        * @access private
        */
       _onLogout : function()  {
-        window.location.href = window.location.origin + window.location.pathname + '/#/logout';
+        window.location.href = Config.App.url + '/#/logout';
       }
 
     });
