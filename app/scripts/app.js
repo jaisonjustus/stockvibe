@@ -57,9 +57,9 @@ define(
        * @access private
        */
       _dashboard : function() {
-        if((Utility.calculateTimeAtNYSE('-4').getHours() <= 9 && 
-            Utility.calculateTimeAtNYSE('-4').getMinutes() <= 40) ||
-           Utility.calculateTimeAtNYSE('-4').getHours() >= 16) {
+        console.log(Utility.calculateTimeAtNYSE('-4').getHours());
+        if(Utility.calculateTimeAtNYSE('-4').getHours() < 9 || 
+           Utility.calculateTimeAtNYSE('-4').getHours() > 16) {
           window.location.href = Config.App.url + '/#/inactive';
         }else {
           window.clearInterval(window.inactiveTimer);

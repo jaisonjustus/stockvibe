@@ -38,7 +38,7 @@ define(
         window.inactiveTimer = window.setInterval(function()  {
           var time = Utility.calculateTimeAtNYSE('-4'),
               timeString = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds() + ' 24hrs (ETZ)';
-          if(time.getHours() >= 9 && time.getMinutes() >= 41) {
+          if(time.getHours() >= 9) {
             window.location.href = Config.App.url + "/#/dashboard";
           }
           this.selector.countDown.html(timeString);
